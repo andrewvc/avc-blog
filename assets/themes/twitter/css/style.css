@@ -1,6 +1,8 @@
 /* Override some defaults */
 html, body {
   background-color: #eee;
+  background: repeat url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAARklEQVQYV2NkIAIwAtVsBmJfPGo3gxSBAC6F/4FyjDBFIIVgASQTYRrhJsHk4BLITkDWia4Qbii6Iqxuw+cmDJPQHY0SIgBRpAxwPcvTugAAAABJRU5ErkJggg==);
+
 }
 .navbar {
   margin-bottom: 0;

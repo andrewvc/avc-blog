@@ -10,7 +10,7 @@ tags :
 
 I've been making some slightly odd food recently. To start with I made a dish
 from a '70s dairy centric cookbook, California Sour Cream Shrimp, which is
-shrimp cooked in a sour cream&nbsp_place_holder; and onion sauce with tomatoes
+shrimp cooked in a sour cream  and onion sauce with tomatoes
 and avocado (hence the California) seasoned with curry powder. The dish came
 out a sort of neon '70s yellow, that was initially off putting, but quickly
 made up for by the fairly good taste.

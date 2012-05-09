@@ -5,9 +5,6 @@ category:
 tags : 
 ---
 
-
-
-
 [Sendgrid](http://sendgrid.com/)'s a great way to send email from your app.
 They provide statistics, reliable delivery, and a fantastic XML/JSON API. If
 you're using Ruby, I recommend checkout out [Sendgrid
@@ -23,57 +20,4 @@ Sendgrid Toolkit's use of HTTParty makes adding functionality very easy. I
 added bounce retrieve and delete functionality by merely adding the small
 number of lines seen in the code sample.
 
-    
-    1
-    2
-    3
-    4
-    5
-    6
-    7
-    8
-    9
-    10
-    11
-    12
-    13
-    
-
-module SendgridToolkit
-
-&nbsp_place_holder;&nbsp_place_holder;class Bounces < AbstractSendgridClient
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;de
-f retrieve(options = {})
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&n
-bsp_place_holder;&nbsp_place_holder;options.each {|k,v| options[k] = 1 if
-k.to_s == 'date' && v == true}
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&n
-bsp_place_holder;&nbsp_place_holder;api_post('bounces','get',options)
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;en
-d
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;de
-f delete(options = {})
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&n
-bsp_place_holder;&nbsp_place_holder;response =
-api_post('bounces','delete',options)
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&n
-bsp_place_holder;&nbsp_place_holder;raise BounceEmailDoesNotExist if
-response['message'].include?('does not exist')
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&n
-bsp_place_holder;&nbsp_place_holder;response
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;en
-d
-
-&nbsp_place_holder;&nbsp_place_holder;end
-
-end
-
+<script src="https://gist.github.com/477944.js?file=SendgridToolkitBounces.rb"></script>

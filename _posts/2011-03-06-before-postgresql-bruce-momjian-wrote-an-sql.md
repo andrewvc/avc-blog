@@ -22,7 +22,7 @@ a specific time. Asking Bruce how he picked shell, he mentioned that it was a
 language he knew, and that Perl just seemed like it was too heavy at the time.
 
 What's immediately striking about SHQL is its completeness given its mere 760
-SLOC. It supports,&nbsp_place_holder;CREATE, DELETE, DROP, INSERT, SELECT,
+SLOC. It supports, CREATE, DELETE, DROP, INSERT, SELECT,
 UPDATE, WHERE, PRINT, EDIT as commands, but has surprising completeness,
 including UNION and DISTINCT. It even supports a rudimentary form of views,
 through which you can do a basic sort of joining!

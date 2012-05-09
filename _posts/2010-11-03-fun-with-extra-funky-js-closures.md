@@ -8,9 +8,9 @@ tags :
 
 
 
-I was pleasantly surprised today to see that&nbsp_place_holder;[Wade Simmons
-(wadey)](http://github.com/wadey)&nbsp_place_holder;had added sent me a pull
-request for adding a package.json file to&nbsp_place_holder;[node-
+I was pleasantly surprised today to see that [Wade Simmons
+(wadey)](http://github.com/wadey) had added sent me a pull
+request for adding a package.json file to [node-
 streamlogger](http://github.com/andrewvc/node-streamlogger), a node.js logging
 library I wrote earlier this year. I was glad because that must mean it still
 works well, which is impressive to me given the fast rate of change in

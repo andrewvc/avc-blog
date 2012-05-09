@@ -9,7 +9,7 @@ tags :
 
 
 Last night I switched my personal website
-[andrewvc.com](http://www.andrewvc.com)&nbsp_place_holder;over from Rackspace
+[andrewvc.com](http://www.andrewvc.com) over from Rackspace
 cloud to AWS. Thanks to some new functionality in Amazon's CloudFront I was
 able to eliminate having a proper server at all. It is now possible to host a
 site using just S3 and CloudFront, no EC2 required!
@@ -33,7 +33,7 @@ probably get going by simply tweaking my scripts.
 First, a quick intro to how S3 and CF work together: One could always host
 content on S3, send traffic via HTTP using a big, ugly URL like:
 
-&nbsp_place_holder;[http://s3-us-
+ [http://s3-us-
 west-1.amazonaws.com/andrewvc.com/index.html](http://s3-us-
 west-1.amazonaws.com/andrewvc.com/index.html).
 
@@ -46,7 +46,7 @@ can be easily set in the AWS web console for CF. One downside of CNAMEs is
 that they only work on subdomains, so, I can't host
 [http://andrewvc.com](http://andrewvc.com) on CF, only
 [http://www.andrewvc.com](http://www.andrewvc.com). I'm currently using [no-
-ip](http://www.no-ip.com) as &nbsp_place_holder;DNS host, and they provide an
+ip](http://www.no-ip.com) as  DNS host, and they provide an
 HTTP redirect service for [http://andrewvc.com](http://andrewvc.com), sending
 traffic there over to the www subdomain.
 
@@ -60,11 +60,11 @@ DRO.](http://gothick.org.uk/2010/10/26/serving-websites-using-s3-and-
 cloudfronts-default-root-object/)
 
 Once you've gotten this far, things get easier. You'll probably want a script
-that does something similar to the&nbsp_place_holder;[script](https://github.c
-om/andrewvc/little_hat/blob/master/sync.rb)&nbsp_place_holder;I wrote, which:
+that does something similar to the [script](https://github.c
+om/andrewvc/little_hat/blob/master/sync.rb) I wrote, which:
 
   1. Generates the static files for my site
-  2. Syncs the files to S3 (I used the command line tool&nbsp_place_holder;[s3cmd](http://s3tools.org/s3cmd)&nbsp_place_holder;).&nbsp_place_holder;
+  2. Syncs the files to S3 (I used the command line tool [s3cmd](http://s3tools.org/s3cmd) ). 
   3. Optionally invalidates the edge versions of the files at CF points of presence.
 
 The last part is very important, as by default CF will hold on to cached files
@@ -87,7 +87,7 @@ than 1000 objects a month you'll start getting charged for it (though it's a
 tiny amount). For these reasons I made the cache invalidation optional, as for
 most of my updates I'm only syncing new content.
 
-**UPDATE: **I may have been testing the invalidation incorrectly, others haven't seen the issue I describe in the following paragraph.&nbsp_place_holder;As another warning, be careful with updates if you try this system. There are still some aspects of CF's caching behaviour I'm not sure of. It seems that CF will want to wait a full hour after its last invalidation before it'll do another one. That may be a result of me explicitly setting the Expires header, something I still need to test.&nbsp_place_holder; I'm not absolutely sure of this, but it seems to be the case that invalidations don't always invalidate immediately. If you aren't OK with this, then I'd say reserve CF for hosting assets only, and version asset changes using different URL paths .
+**UPDATE: **I may have been testing the invalidation incorrectly, others haven't seen the issue I describe in the following paragraph. As another warning, be careful with updates if you try this system. There are still some aspects of CF's caching behaviour I'm not sure of. It seems that CF will want to wait a full hour after its last invalidation before it'll do another one. That may be a result of me explicitly setting the Expires header, something I still need to test.  I'm not absolutely sure of this, but it seems to be the case that invalidations don't always invalidate immediately. If you aren't OK with this, then I'd say reserve CF for hosting assets only, and version asset changes using different URL paths .
 
 And that's it! I have to say I find using only S3 + CF to be a rather elegant
 solution, despite the few ungainly warts regarding invalidation. If you'd like
@@ -102,5 +102,5 @@ system with this caching behavior on behalf of a client. The potential for an
 embarassing (or costly) mistake is just too high. However, this is my personal
 site and this is the kind of stuff I love doing, I love the idea of my site
 being hosted on a high performance CDN with global points of presence. That's
-awesome.&nbsp_place_holder;
+awesome. 
 

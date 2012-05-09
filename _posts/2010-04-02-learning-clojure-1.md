@@ -12,7 +12,7 @@ So, I'm on the road towards learning [Clojure](http://www.clojure.org), via
 Stuart Halloway's [Programming
 Clojure](http://www.pragprog.com/titles/shcloj). It's an OK book, hardly the
 gem (no pun intended) that the pickaxe was. However, it
-_is_&nbsp_place_holder;thorough, and is less disjointed than simply googling
+_is_ thorough, and is less disjointed than simply googling
 around for Clojure info and docs.
 
 With all that in mind, [Casting SPELs in Clojure](http://www.lisperati.com

@@ -48,7 +48,7 @@ diff $PROD_SHA...master`
 Or, you can see what the difference is in terms of commits messages rather
 than actual lines changed with `git show-branch`
 
-&nbsp_place_holder;`PROD_SHA=`curl -I http://www.example.net | grep X-GitSHA |
+ `PROD_SHA=`curl -I http://www.example.net | grep X-GitSHA |
 cut -d':' -f2` git show-branch $PROD_SHA master`
 
 Lastly, if you need the cache on a resource busted between deploys be it in

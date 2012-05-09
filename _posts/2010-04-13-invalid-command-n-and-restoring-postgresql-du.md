@@ -1,12 +1,9 @@
 ---
-title: Invalid Command \N and restoring PostgreSQL dumps
+title: "Invalid Command \N and restoring PostgreSQL dumps"
 layout: post
 category: 
 tags : 
 ---
-
-
-
 
 During a recent DB restore from Heroku onto my local machine I got a ton of
 "Invalid Command \N" errors after doing a psql DBNAME -f DUMP.sql .

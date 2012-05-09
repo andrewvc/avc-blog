@@ -8,7 +8,7 @@ title: Why Not MessagePack?
 JSON is a fantastic format, anywhere people in your organization want to reach
 for XML, it's always a good thing to ask the question "Why not JSON?". The
 question I'd like you to ask the next time you're reaching for your JSON
-hammer, is "Why not MessagePack?".&nbsp_place_holder;
+hammer, is "Why not MessagePack?". 
 
 [MessagePack](http://msgpack.org/) has the following things going for it when
 compared to JSON.
@@ -25,56 +25,7 @@ cases, but for internal ones, MessagePack generally wins.
 The following example, written in Ruby, illustrates the advantages of
 MessagePack in action:
 
-    
-    1
-    2
-    3
-    4
-    5
-    6
-    7
-    8
-    9
-    10
-    11
-    12
-    13
-    14
-    15
-    16
-    17
-    18
-    19
-    20
-    21
-    22
-    23
-    
-
-
-
-    > mixed_data = {"id"=>18929882, "title"=>"Lorem Ipsum", "author"=>"Sit Dolor"}
-    # JSON stores the data in a reasonable amount of space...
-    > mixed_data.to_json.length
-    => 58
-    # But messagepack does much better
-    > MessagePack.pack(mixed_data).length
-    => 44
-    # That's a pretty big difference! But its even more efficient with numbers
-    > numerical_array = [1223, 2190, 1980092, 8932191892, 98321982189]
-    > numerical_array.to_json.length
-    => 42
-    > MessagePack.pack(numerical_array).length
-    => 30
-    # Both are pretty fast...
-    > Benchmark.measure { 2_000_000.times { mixed_data.to_json} }
-    => 12.550000 0.040000 12.590000 ( 12.567510)
-    # But message pack is faster...
-    Benchmark.measure { 2_000_000.times { MessagePack.pack(mixed_data)} }
-    => 3.250000 0.020000 3.270000 ( 3.253008)
-    # They're compatible as well...
-    > JSON.parse(mixed_data.to_json) ==
-    MessagePack.unpack(MessagePack.pack(mixed_data))
+<script src="https://gist.github.com/984879.js?file=messagepack_vs_json.rb"></script>    
 
 # So, use MessagePack!
 

@@ -1,4 +1,5 @@
 ---
+permalink: ghb-and-body-building
 title: GHB and Body Building
 layout: post
 category: 

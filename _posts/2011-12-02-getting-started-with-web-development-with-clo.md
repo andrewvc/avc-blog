@@ -1,8 +1,9 @@
 ---
+permalink: getting-started-with-web-development-with-clo
 title: "Experiences with Noir: Taking Clojure Web-Dev to the Next Level"
 layout: post
 category: 
-tags : 
+tags : [clojure]
 ---
 
 

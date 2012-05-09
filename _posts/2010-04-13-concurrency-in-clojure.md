@@ -1,8 +1,8 @@
 ---
+permalink: concurrency-in-clojure
 title: Concurrency in Clojure
 layout: post
-category: 
-tags : 
+tags : [clojure]
 ---
 
 

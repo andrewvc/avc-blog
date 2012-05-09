@@ -1,8 +1,9 @@
 ---
+permalink: before-postgresql-bruce-momjian-wrote-an-sql
 title: Before PostgreSQL, Bruce Momjian wrote an SQL in Shell
 layout: post
 category: 
-tags : 
+tags : [random]
 ---
 
 

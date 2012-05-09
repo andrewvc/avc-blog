@@ -1,4 +1,5 @@
 ---
+permalink: i-still-have-a-crush-on-wolfram-alpha
 title: I (still) have a crush on Wolfram Alpha
 layout: post
 category: 

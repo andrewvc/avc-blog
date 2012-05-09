@@ -1,7 +1,8 @@
 ---
+permalink: unicode-chalkpoints
 layout: post
 category: 
-tags : 
+tags : [random]
 ---
 
 

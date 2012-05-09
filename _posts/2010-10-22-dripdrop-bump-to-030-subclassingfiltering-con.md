@@ -1,8 +1,8 @@
 ---
+permalink: dripdrop-bump-to-030-subclassingfiltering-con
 title: "DripDrop bump to 0.3.0. Subclassing,Filtering, Consistency, and Specs"
 layout: post
-category: 
-tags : 
+tags : [ruby]
 ---
 
 

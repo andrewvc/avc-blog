@@ -1,4 +1,5 @@
 ---
+permalink: esoteric-and-archaic-words-in-the-adventures
 title: Esoteric and Archaic Words in The Adventures of Sherlock Holmes
 layout: post
 category: 

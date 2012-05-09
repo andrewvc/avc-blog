@@ -1,4 +1,5 @@
 ---
+permalink: deep-merging
 title: Deep Merging
 layout: post
 category: 

@@ -1,4 +1,5 @@
 ---
+permalink: check-out-the-new-podcast-pydanny-and-myself
 title: Check out the new podcast pydanny and myself just started!
 layout: post
 category: 

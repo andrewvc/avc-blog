@@ -1,4 +1,5 @@
 ---
+permalink: flying-the-sr-71-blackbird
 title: Flying the SR-71 Blackbird
 layout: post
 category: 

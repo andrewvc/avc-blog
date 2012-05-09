@@ -1,8 +1,9 @@
 ---
+permalink: fun-with-extra-funky-js-closures
 title: Fun with Extra Funky JS Closures
 layout: post
 category: 
-tags : 
+tags : [javascript]
 ---
 
 

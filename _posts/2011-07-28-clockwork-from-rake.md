@@ -1,8 +1,9 @@
 ---
+permalink: clockwork-from-rake
 title: Clockwork from Rake
 layout: post
 category: 
-tags : 
+tags : [ruby, ops]
 ---
 
 Clockwork's an awesome gem, but using it via its funky wrapper I'm not so nuts

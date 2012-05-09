@@ -1,8 +1,8 @@
 ---
+permalink: thanks-chuck-ffi-rzmq-and-zmqmachine-gems-rel
 title: Thanks Chuck! ffi-rzmq and zmqmachine gems released. 1.8.x compat as well!
 layout: post
-category: 
-tags : 
+tags : [ruby]
 ---
 
 

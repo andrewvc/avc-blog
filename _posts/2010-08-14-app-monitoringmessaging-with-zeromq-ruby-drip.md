@@ -1,8 +1,8 @@
 ---
+permalink: app-monitoringmessaging-with-zeromq-ruby-drip
 title: App monitoring/messaging with ZeroMQ + Ruby = dripdrop
 layout: post
-category: 
-tags : 
+tags : [ruby]
 ---
 
 

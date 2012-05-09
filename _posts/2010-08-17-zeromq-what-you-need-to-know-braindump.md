@@ -1,7 +1,7 @@
 ---
+permalink: zeromq-what-you-need-to-know-braindump
 layout: post
-category: 
-tags : 
+tags : [async]
 ---
 
 

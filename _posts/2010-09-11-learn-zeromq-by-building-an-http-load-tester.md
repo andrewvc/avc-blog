@@ -1,8 +1,8 @@
 ---
+permalink: learn-zeromq-by-building-an-http-load-tester
 title: Learn ZeroMQ by Building an HTTP Load Tester
 layout: post
-category: 
-tags : 
+tags : [ruby]
 ---
 
 

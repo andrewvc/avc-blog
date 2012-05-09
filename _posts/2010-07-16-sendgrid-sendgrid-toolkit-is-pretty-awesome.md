@@ -1,8 +1,9 @@
 ---
+permalink: sendgrid-sendgrid-toolkit-is-pretty-awesome
 title: Sendgrid + Sendgrid Toolkit is pretty awesome
 layout: post
 category: 
-tags : 
+tags : [ruby]
 ---
 
 [Sendgrid](http://sendgrid.com/)'s a great way to send email from your app.

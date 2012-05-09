@@ -1,8 +1,8 @@
 ---
+permalink: writing-parsers
 title: Writing Parsers
 layout: post
-category: 
-tags : 
+tags : [random]
 ---
 
 

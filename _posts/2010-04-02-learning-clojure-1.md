@@ -1,4 +1,5 @@
 ---
+permalink: learning-clojure-1
 title: Learning Clojure
 layout: post
 category: 

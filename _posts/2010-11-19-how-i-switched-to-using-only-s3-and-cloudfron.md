@@ -1,8 +1,8 @@
 ---
+permalink: how-i-switched-to-using-only-s3-and-cloudfron
 title: How I Host My Site Using Only S3, CloudFront, and a Few Small Tools
 layout: post
-category: 
-tags : 
+tags : [ops]
 ---
 
 

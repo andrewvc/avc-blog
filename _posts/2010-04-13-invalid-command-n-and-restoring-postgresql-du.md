@@ -1,4 +1,5 @@
 ---
+permalink: invalid-command-n-and-restoring-postgresql-du
 title: "Invalid Command \N and restoring PostgreSQL dumps"
 layout: post
 category: 

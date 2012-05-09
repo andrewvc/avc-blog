@@ -1,4 +1,5 @@
 ---
+permalink: reasons-i-dont-miss-programming-in-perl
 title: Reasons I don't miss programming in perl
 layout: post
 category: 

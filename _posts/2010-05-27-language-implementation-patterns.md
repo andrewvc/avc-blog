@@ -1,4 +1,5 @@
 ---
+permalink: language-implementation-patterns
 title: Language Implementation Patterns
 layout: post
 category: 

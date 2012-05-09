@@ -1,4 +1,5 @@
 ---
+permalink: los-angeles-hacker-news
 title: Los Angeles Hacker News
 layout: post
 category: 

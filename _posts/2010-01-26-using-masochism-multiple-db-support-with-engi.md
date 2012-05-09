@@ -1,8 +1,8 @@
 ---
+permalink: using-masochism-multiple-db-support-with-engi
 title: Using Masochism multiple DB support with Engine Yard Cloud
 layout: post
-category: 
-tags : 
+tags : [ruby]
 ---
 
 

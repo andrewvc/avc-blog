@@ -1,8 +1,8 @@
 ---
+permalink: common-sql-queries
 title: Common SQL Queries
 layout: post
-category: 
-tags : 
+tags : [databases, ops]
 ---
 
 

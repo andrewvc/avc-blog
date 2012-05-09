@@ -1,4 +1,5 @@
 ---
+permalink: serving-static-files-with-node-js
 title: Serving static files with Node JS
 layout: post
 category: 

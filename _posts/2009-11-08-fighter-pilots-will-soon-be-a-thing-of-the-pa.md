@@ -1,4 +1,5 @@
 ---
+permalink: fighter-pilots-will-soon-be-a-thing-of-the-pa
 title: Fighter Pilots Will Soon Be A Thing Of The Past
 layout: post
 category: 

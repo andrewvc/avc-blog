@@ -1,4 +1,5 @@
 ---
+permalink: clojure-is-next
 title: Clojure is next
 layout: post
 category: 

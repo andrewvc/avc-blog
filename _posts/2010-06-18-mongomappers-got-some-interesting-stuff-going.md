@@ -1,8 +1,8 @@
 ---
+permalink: mongomappers-got-some-interesting-stuff-going
 title: MongoMapper's got some interesting stuff going on
 layout: post
-category: 
-tags : 
+tags : [databases, ruby]
 ---
 
 

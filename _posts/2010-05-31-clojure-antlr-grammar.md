@@ -1,11 +1,9 @@
 ---
+permalink: clojure-antlr-grammar
 title: Clojure ANTLR Grammar
 layout: post
-category: 
-tags : 
+tags : [clojure]
 ---
-
-
 
 
 I'm currently learning Clojure and ANTLR (separately), that being the case,

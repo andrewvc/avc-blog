@@ -1,4 +1,5 @@
 ---
+permalink: los-angeles-hacker-news-google-group
 title: Los Angeles Hacker News Google Group
 layout: post
 category: 

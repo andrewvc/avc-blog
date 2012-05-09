@@ -1,6 +1,6 @@
 ---
 layout: page
-title: ToC
+title: Mostly Code.
 ---
 {% include JB/setup %}
 

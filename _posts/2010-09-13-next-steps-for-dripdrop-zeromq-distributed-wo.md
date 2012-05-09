@@ -1,8 +1,8 @@
 ---
+permalink: next-steps-for-dripdrop-zeromq-distributed-wo
 title: "Next Step for DripDrop: ZeroMQ Distributed Workers"
 layout: post
-category: 
-tags : 
+tags : [ruby]
 ---
 
 

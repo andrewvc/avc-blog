@@ -1,12 +1,9 @@
 ---
+permalink: la-hacker-news-january-meetup
 title: LA Hacker News January Meetup
 layout: post
-category: 
 tags : 
 ---
-
-
-
 
 This month's [Los Angeles Hacker News](http://www.meetup.com/Los-Angeles-
 Hacker-News/) meetup is going to be pretty damn fun. We've

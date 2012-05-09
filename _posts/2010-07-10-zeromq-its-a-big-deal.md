@@ -1,8 +1,8 @@
 ---
+permalink: zeromq-its-a-big-deal
 title: ZeroMQ, It's a big deal
 layout: post
-category: 
-tags : 
+tags : [async]
 ---
 
 

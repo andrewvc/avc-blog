@@ -1,8 +1,8 @@
 ---
+permalink: learn-zeromq-in-ruby-with-these-examples
 title: Learn ZeroMQ in Ruby With These Examples...
 layout: post
-category: 
-tags : 
+tags : [ruby]
 ---
 
 

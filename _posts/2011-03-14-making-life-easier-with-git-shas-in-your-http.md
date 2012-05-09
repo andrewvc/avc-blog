@@ -1,8 +1,9 @@
 ---
+permalink: making-life-easier-with-git-shas-in-your-http
 title: Making life easier with GIT SHAs in your HTTP Headers
 layout: post
 category: 
-tags : 
+tags : [ops, ruby, rails]
 ---
 
 

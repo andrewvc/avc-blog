@@ -1,8 +1,9 @@
 ---
+permalink: node-js-logging-module
 title: Node JS Logging Module
 layout: post
 category: 
-tags : 
+tags : ['nodejs']
 ---
 
 

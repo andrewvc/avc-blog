@@ -1,8 +1,8 @@
 ---
+permalink: you-cant-hack-photography
 title: You Can't Hack Photography
 layout: post
-category: 
-tags : 
+tags : [random, photography]
 ---
 
 
@@ -15,7 +15,7 @@ it's so technical, and for this terrible reason it generally it winds up a
 confused train wreck.
 
 This was motivated to write this by today's
-[post](http://posterous.com/posts/new/670799?polyominoes) on
+post on
 [hacker
 news](http://news.ycombinator.com/item?id=3279775) where
 Peter Norvig gives an intro to photography. Turning photography into a

@@ -1,8 +1,8 @@
 ---
+permalink: dripdrop-now-supports-more-socket-types
 title: DripDrop now supports more socket types.
 layout: post
-category: 
-tags : 
+tags : [ruby]
 ---
 
 

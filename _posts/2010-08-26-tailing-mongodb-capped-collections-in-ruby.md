@@ -1,8 +1,9 @@
 ---
+permalink: tailing-mongodb-capped-collections-in-ruby
 title: Tailing MongoDB Capped Collections in Ruby
 layout: post
 category: 
-tags : 
+tags : [ruby, databases]
 ---
 
 

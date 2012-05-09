@@ -1,8 +1,8 @@
 ---
+permalink: node-and-processnexttick
 title: Node and process.nextTick
 layout: post
-category: 
-tags : 
+tags : [nodejs]
 ---
 
 Coding in Node, or any evented setting, often requires different ways of
@@ -11,13 +11,19 @@ track of _when_ the code you're writing
 will run. I've really just started writing code in Node, below is a
 clarification of a couple things I found initially confusing. As an example:
 
-<script src="https://gist.github.com/358378.js?file=gistfile1.js"></script>
+    //Don't do this! 
+    var file = 'myFile.txt'; // Executes First
+    fs.readFile(file, function () {
+      sys.write("Hi"); // Executes Third
+    });
+    sys.write("BYE") //Executes Second
+
 
 This code will print out "BYE" before "HI". While initially counter-intuitive,
 you can actually leverage this to make more readable code. Below is an example
 from [my fork of node-paperboy](http://github.com/andrewvc
 /node-paperboy). As you can see, #deliver returns a delegate, which lets us
-set up our callbacks.
+set up our callbacks. [See this example](https://gist.github.com/358221#file_paperboy_delegate_example.js) for more.
 
 <script src="https://gist.github.com/358221.js?file=PaperboyDelegateExample.js"></script>    
 
@@ -25,7 +31,7 @@ The interesting part about this is that after all our delegates are setup
 there's no need to call a method to says we're done adding methods to the
 delegate, and that its free to run and deliver the file. Looking at the
 implementation of #deliver we can get a little more information about how this
-works:
+works.
 
 <script src="https://gist.github.com/358229.js?file=node_delegate_example.js"></script>    
 

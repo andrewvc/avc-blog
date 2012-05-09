@@ -1,15 +1,15 @@
 ---
+permalink: tackling-my-first-jlojure-project-a-graphical
 title: Tackling my first Clojure project, a Graphical HTTP Benchmarker
 layout: post
-category: 
-tags : 
+tags : [clojure, async]
 ---
 
 
-
+#### NOTE: The parbench project has been superceeded by [engulf](https://github.com/andrewvc/engulf) ####
 
 I've been bits of my free time working on
-[parbench](https://github.com/andrewvc/parbench) over the
+[parbench](https://github.com/andrewvc/engulf) over the
 last month, a visual version of the venerable 'ab' (apache-bench) HTTP load
 testing tool as a way to get up to speed on clojure. It's been a fun project
 as far as getting up to speed, and I thuoght I'd share what I've learned about
@@ -20,9 +20,7 @@ Let's walk through the tool first, basically, you run it against an URL like
 horizontal line is a 'user', and each square is a request, it fills from left
 to right as each user goes through its requests.
 
-[![Screenshot-parbench](./images/55648729-0-Screenshot-
-Parbench.png.scaled500.png)](./images/55648729-0-Screenshot-
-Parbench.png.scaled1000.png)
+![Screenshot](/assets/images/Screenshot-Parbench.png)
 
 **Structuring the App**
 

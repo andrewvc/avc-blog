@@ -1,7 +1,8 @@
 ---
+permalink: why-arent-you-using-messagepack
 layout: post
 category: 
-tags : 
+tags : [random]
 title: Why Not MessagePack?
 ---
 
@@ -27,7 +28,7 @@ MessagePack in action:
 
 <script src="https://gist.github.com/984879.js?file=messagepack_vs_json.rb"></script>    
 
-# So, use MessagePack!
+*So, use MessagePack!*
 
 For more info, check out the [Message Pack Website](http://msgpack.org/).
 

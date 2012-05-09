@@ -18,45 +18,4 @@ I'm using Phil Burrows mongo_db_logger to log all Rails reqs to a capped
 collection at the moment, I'd recommend dropping this into your rails app,
 after modifying it to read your mongo config so you always have it ready.
 
-    
-    1
-    2
-    3
-    4
-    5
-    6
-    7
-    8
-    9
-    10
-    11
-    12
-    
-
-#Kind of like tail -f -n1
-
-db = Mongo::Connection.new(mongo_hostname).db(mongo_dbname)
-
-coll = db.collection(mongo_collection)
-
-start_count = coll.count
-
-tail = Mongo::Cursor.new(coll, :tailable => true, :order => [['$natural',
-1]]).skip(start_count- 1)
-
-loop do
-
-&nbsp_place_holder;&nbsp_place_holder;if doc = tail.next_document
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;pu
-ts doc
-
-&nbsp_place_holder;&nbsp_place_holder;else
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;sl
-eep 1
-
-&nbsp_place_holder;&nbsp_place_holder;end
-
-end
-
+<script src="https://gist.github.com/550650.js?file=Tailing%20a%20MongoDB%20capped%20collection.rb"></script>

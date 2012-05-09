@@ -20,6 +20,4 @@ and em-websocket.
 
 I've diagrammed my use case for it below:
 
-[![Dripdroptopology](./images/25754906-0-dripdroptopology.png.scaled.500.jpg)]
-(./images/25754906-0-dripdroptopology.png)
-
+![Dripdroptopology](./images/25754906-0-dripdroptopology.png.scaled.500.jpg)

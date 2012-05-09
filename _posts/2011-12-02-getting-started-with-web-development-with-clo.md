@@ -1,5 +1,5 @@
 ---
-title: Experiences with Noir: Taking Clojure Web-Dev to the Next Level
+title: "Experiences with Noir: Taking Clojure Web-Dev to the Next Level"
 layout: post
 category: 
 tags : 

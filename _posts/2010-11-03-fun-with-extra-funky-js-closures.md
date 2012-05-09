@@ -39,38 +39,8 @@ work with runtime customizable route names. The following code, extracted from
 [lib/streamlogger.js](http://github.com/andrewvc/node-
 streamlogger/blob/master/lib/streamlogger.js#L55) accomplishes this:
 
-    
-    1
-    2
-    3
-    4
-    5
-    6
-    7
-    8
-    
+<script src="https://gist.github.com/983617.js?file=funkyclosure.js"></script>
 
-for (var logLevel in this.levelList) {
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;th
-is[logLevel] = (function(logLevel) {
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&n
-bsp_place_holder;&nbsp_place_holder;return function (message,callback) {
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&n
-bsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;this
-.logAtLevel(message, this.levelList[logLevel], callback);
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&n
-bsp_place_holder;&nbsp_place_holder;}
-
-&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;&nbsp_place_holder;})
-(logLevel);
-
-&nbsp_place_holder;&nbsp_place_holder;}
-
-});
 
 It takes a minute to wrap your head around, but it's quite rewarding once you
 do. One thing about it that is confusing, is that the name logLevel is both

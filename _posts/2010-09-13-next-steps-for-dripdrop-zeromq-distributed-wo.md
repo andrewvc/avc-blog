@@ -1,5 +1,5 @@
 ---
-title: Next Step for DripDrop: ZeroMQ Distributed Workers
+title: "Next Step for DripDrop: ZeroMQ Distributed Workers"
 layout: post
 category: 
 tags : 

@@ -1,5 +1,5 @@
 ---
-title: DripDrop bump to 0.3.0: Subclassing,Filtering, Consistency, and Specs
+title: "DripDrop bump to 0.3.0. Subclassing,Filtering, Consistency, and Specs"
 layout: post
 category: 
 tags : 

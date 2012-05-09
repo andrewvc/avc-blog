@@ -53,48 +53,28 @@ MessagePack in action:
 
 
 
-> mixed_data = {"id"=>18929882, "title"=>"Lorem Ipsum", "author"=>"Sit Dolor"}
-
-# JSON stores the data in a reasonable amount of space...
-
-> mixed_data.to_json.length
-
-=> 58
-
-# But messagepack does much better
-
-> MessagePack.pack(mixed_data).length
-
-=> 44
-
-# That's a pretty big difference! But its even more efficient with numbers
-
-> numerical_array = [1223, 2190, 1980092, 8932191892, 98321982189]
-
-> numerical_array.to_json.length
-
-=> 42
-
-> MessagePack.pack(numerical_array).length
-
-=> 30
-
-# Both are pretty fast...
-
-> Benchmark.measure { 2_000_000.times { mixed_data.to_json} }
-
-&nbsp_place_holder;=> 12.550000 0.040000 12.590000 ( 12.567510)
-
-# But message pack is faster...
-
-Benchmark.measure { 2_000_000.times { MessagePack.pack(mixed_data)} }
-
-&nbsp_place_holder;=> 3.250000 0.020000 3.270000 ( 3.253008)
-
-# They're compatible as well...
-
-> JSON.parse(mixed_data.to_json) ==
-MessagePack.unpack(MessagePack.pack(mixed_data))
+    > mixed_data = {"id"=>18929882, "title"=>"Lorem Ipsum", "author"=>"Sit Dolor"}
+    # JSON stores the data in a reasonable amount of space...
+    > mixed_data.to_json.length
+    => 58
+    # But messagepack does much better
+    > MessagePack.pack(mixed_data).length
+    => 44
+    # That's a pretty big difference! But its even more efficient with numbers
+    > numerical_array = [1223, 2190, 1980092, 8932191892, 98321982189]
+    > numerical_array.to_json.length
+    => 42
+    > MessagePack.pack(numerical_array).length
+    => 30
+    # Both are pretty fast...
+    > Benchmark.measure { 2_000_000.times { mixed_data.to_json} }
+    => 12.550000 0.040000 12.590000 ( 12.567510)
+    # But message pack is faster...
+    Benchmark.measure { 2_000_000.times { MessagePack.pack(mixed_data)} }
+    => 3.250000 0.020000 3.270000 ( 3.253008)
+    # They're compatible as well...
+    > JSON.parse(mixed_data.to_json) ==
+    MessagePack.unpack(MessagePack.pack(mixed_data))
 
 # So, use MessagePack!
 

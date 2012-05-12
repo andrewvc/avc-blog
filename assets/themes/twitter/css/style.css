@@ -1,7 +1,12 @@
 /* Override some defaults */
-html, body {
+html {
   background-color: #bcbcbc;
   background: repeat url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAARklEQVQYV2NkIAIwAtVsBmJfPGo3gxSBAC6F/4FyjDBFIIVgASQTYRrhJsHk4BLITkDWia4Qbii6Iqxuw+cmDJPQHY0SIgBRpAxwPcvTugAAAABJRU5ErkJggg==) fixed;
+}
+
+body {
+    background-image: none;
+    background-color: #f2f2f2;
 }
 .navbar {
   margin-bottom: 0;
@@ -25,6 +30,7 @@ html, body {
   margin-top: 15px;
   padding: 0px 15px;
   background-color: #fff;
+  border-right: 1px solid #eee;
 }
 
 .main-content .span12 {
@@ -83,12 +89,12 @@ ul.posts li > a {
   padding-left: 5px;
 }
 
-@media (max-width: 600px) {
-  body {
-    background-image: none;
-    background-color: #f2f2f2;
-  }
+body {
+
 }
+
+
+
 
 footer p {
   padding: 2px;

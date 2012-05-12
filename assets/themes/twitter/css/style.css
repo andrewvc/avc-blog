@@ -84,7 +84,10 @@ ul.posts li > a {
 }
 
 @media (max-width: 600px) {
-  ul.posts li {}
+  body {
+    background-image: none;
+    background-color: #f2f2f2;
+  }
 }
 
 footer p {

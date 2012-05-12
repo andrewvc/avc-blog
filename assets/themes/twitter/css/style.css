@@ -60,3 +60,31 @@ h1 {
    font-size: 32px;
 }
 
+ul.posts {
+  display: table;
+  list-style: none;
+  margin-left: 0px;
+}
+
+ul.posts li {
+  display: table-row;
+}
+
+ul.posts li > a, ul.posts li > span {
+  display: table-cell;
+  padding-bottom: 3px;
+}
+
+ul.posts li > span {
+  width: 78px;
+  text-align: right;
+  padding-right: 5px;
+}
+
+ul.posts li > a {
+  padding-left: 5px;
+}
+
+@media (max-width: 600px) {
+  ul.posts li {}
+}

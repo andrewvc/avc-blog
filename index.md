@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Mostly Code.
+title: My Blog. Mostly Code.
 ---
 {% include JB/setup %}
 

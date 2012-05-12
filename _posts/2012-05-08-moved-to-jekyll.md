@@ -1,5 +1,5 @@
 ---
-permalink: moved-to-jekyll.html
+permalink: moved-to-jekyll
 layout: post
 category: 
 tags : 

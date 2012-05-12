@@ -103,3 +103,8 @@ footer p {
   border-right: 1px solid #eee;
   padding-right: 6px;
 }
+
+.tag-count {
+  vertical-align: super;
+  font-size: 75%;
+}

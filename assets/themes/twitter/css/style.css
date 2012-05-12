@@ -93,3 +93,13 @@ footer p {
   margin: 0px auto;
   text-align: center;
 }
+
+.tag_box {
+  display: inline;
+  margin: 0px;
+}
+.date, .tag_box li {
+  display: inline-block;
+  border-right: 1px solid #eee;
+  padding-right: 6px;
+}

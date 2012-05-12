@@ -39,6 +39,10 @@ body {
   margin: 0px;
 }
 
+.content-inner {
+  padding-top:13px;
+}
+
 .row {
   padding: 0px 0px;
   background-color: #fff;

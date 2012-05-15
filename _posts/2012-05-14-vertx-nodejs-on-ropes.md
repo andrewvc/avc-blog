@@ -198,6 +198,6 @@ This model is great for large numbers of sockets and file descriptors, where it 
 
 ## A Note on Concurrent Programming in General
 
-I would be remiss not to mention that concurrent programming is hard. Very hard, and nearly impossible to truly get right. It's easy to get lost in tools as a panacea, but the reality is, that modeling concurrent problems well, implementing concurrent systems correctly, requires discipline and skill that all programmers find themselves falling short on.
+I would be remiss not to mention that concurrent programming is hard, very hard. Really, it's nearly impossible to truly get right. It's easy to view tools as a panacea, which they aren't. The reality is that modeling concurrent problems well and then implementing them correctly requires discipline, patience, and skill.
 
-There are no silver bullets, and there is no perfection. The best we can do is keep a level head in the face of chaos, and try and work through some sensible principles.
+There are no silver bullets and there is no perfection, but there *is* progress.

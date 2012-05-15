@@ -8,6 +8,11 @@ body {
     background-image: none;
     background-color: #f2f2f2;
 }
+
+h2 {
+  font-size: 16px;
+}
+
 .navbar {
   margin-bottom: 0;
   background-color: #fff;
@@ -39,6 +44,33 @@ body {
   margin: 0px;
 }
 
+.main-content table {
+  margin: 15px 0px;
+  background-color: #fff;
+}
+
+.main-content table td, .main-content table th {
+  text-align: center;
+  padding: 5px;
+}
+
+.main-content table th, .main-content table td.desc  {
+  font-weight: bold;
+  border-right: 1px solid #fcc;
+  border-bottom: 1px solid #fcc;
+  border-left: none;
+}
+
+.main-content table td {
+  border: 1px solid #efefef;
+  font-size: 12px;
+}
+
+.main-content table td.highlight {
+  background-color: #FAFA6B;
+}
+
+
 .content-inner {
   padding-top:13px;
 }
@@ -46,7 +78,7 @@ body {
 .row {
   padding: 0px 0px;
   background-color: #fff;
-  margin: 5px;
+  margin: 4px 2px;
 }
 
 .page-header {

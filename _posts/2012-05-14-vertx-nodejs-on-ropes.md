@@ -93,7 +93,7 @@ Node.js takes the position of only using asynchronous IO. The pseudo-code below 
           connection.send("DB Error " + error)  
         }
       }, fn (error) {
-        connection.send("DB Error" + error")
+        connection.send("DB Error" + error)
       }
     }
     
@@ -105,7 +105,7 @@ Node.js takes the position of only using asynchronous IO. The pseudo-code below 
       threadpool.execute( fn () {
         try {
           db.write({m: msg, cnt: message_counter})
-          res = db.read("something_dependent)
+          res = db.read("something_dependent")
           connection.send(format_result(result))
         } catch (DBError error) {
           connection.send("DB Error " + error)

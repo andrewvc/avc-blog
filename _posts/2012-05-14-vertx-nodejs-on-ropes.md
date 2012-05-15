@@ -2,16 +2,18 @@
 title: 'Vert.x: Why the JVM may put Node.js on the Ropes'
 layout: post
 tags : [nodejs, jvm, systems, clojure, vertx]
-permalink: vertx-node-on-ropes
+permalink: vertx-node-on-ropes.html
 ---
 
 ## Why We're Due For a Change
 
 We're beginning to see a turning point in asynchronous frameworks, specifically with regard to Node.js. My contention is that <strong>a dynamic language paired with a hybrid concurrency (async+threads) model is a better node.js than node.js</strong>.
 
-Developers want dynamic languages with good syntax (like Python and Ruby). They also want massively concurrent servers to deal with sleepy connections from websockets and comet.
+Developers want a dynamic language with a clean syntax like Python or Ruby. They also want massively concurrent servers to deal with sleepy connections from websockets, comet, and the like.
 
-With the JVM's rise as a language platform, we're finally at a point where fun dynamic languages can use the great threading support the JVM has to offer. With the debut of [Vert.x](http://vertx.io/) we're finally at a point where that software is packaged together is such a way as to be extremely practical. The chart below explains the confluence of what I view as the salient features that make Vert.x special.
+With the JVM's rise as a polyglot platform, we're finally at a point where dynamic languages can use the great threading support the JVM has to offer. Additionally, with the recent debut of [Vert.x](http://vertx.io/) we're finally at a point where that software is packaged together is such a way as to be extremely practical. 
+
+Vert.x is an asynchronous application server, essentially Node.js+ for the JVM. The chart below shows why I think Vert.x has the right mix of features to make a big impact:
 
 <table>
   <thead>
@@ -62,13 +64,22 @@ With the JVM's rise as a language platform, we're finally at a point where fun d
      <td>Poor</td>
      <td class='highlight'>Good</td>
    </tr>       
+   <tr>
+     <td class='desc'>Backed By</td>
+     <td class='highlight'>VMware</td>
+     <td class='highlight'>Joyent</td>
+     <td>N/A</td>
+     <td>N/A</td>
+     <td>N/A</td>
+     <td>N/A    </td>
+   </tr>       
 
 
 </table>
 
 ## An Argument for Hybrid Concurrency
 
-Here's two pieces of pseudocode, one pure async, the other hybrid. Let's compare and contrast:
+Node.js takes the position of only using asynchronous IO. The pseudo-code below contrasts an asynchronous implementation with a hybrid implementation. Take a quick gander at it, we'll compare and contrast below.
     
     # Pure Async
     messages_counter = 0
@@ -106,25 +117,25 @@ Here's two pieces of pseudocode, one pure async, the other hybrid. Let's compare
 It's my contention that the hybrid example is both easier to read, and has more desirable performance characteristics. The reasons being that the hybrid model:
 
 * **Uses Async where it works best, threads where they work best**: Async is used for connection handling where it works best, synchronous threads are used for app logic where they work best
-* **Optimizes concurrency by tuning, less rewriting**: Optimal concurrency can be achieved by adjusting threadpool sizes, types, and priorities. In a reactor there are fewer options since there is a single global queue.
-* **Doesn't hang on slow code**: If the format_result method has variable runtime, lets say for some result-sets it's much slower, the thread scheduler will ensure that it doesn't block all program's threads. In the real world this helps ensure QoS.
-* **Shares data using language features**: The language's concurrent datastructures can be used for data shared across cores (the messages_counter in this case)
+* **Optimizes concurrency by tuning**: Optimal concurrency can be achieved by adjusting threadpool sizes, types, and priorities. In a reactor there are fewer options since there is a single global queue.
+* **Doesn't block on slow code**: If in the code sample above the `format result` method's runtime is variable, occasionally running slowly, the thread scheduler will ensure that it doesn't block all program's threads. In the real world this helps ensure QoS.
+* **Shares data using language features**: The language's concurrent datastructures can be used for data shared across cores (the `messages_counter` variable in this case)
 * **Uses the language's exception handling**: Try/catch is easier and often more simple than checking each callback.
 
-Now, to be fair there are solutions to nearly all of these problems in node, but they are mostly kludgy. Here are some following refrains about Node.js in regarding the previous points:
+While node.js does have solutions to most of these problems, they are generally awkward to use. Some of the more common refrains, and my responses to them are:
 
-* **But you can load balance across multiple processes in node!** This is true but only gets you granularity at the per-connection level. One bad client can ruin all the connections to that particular instance, it can't leverage additional cores or schedule other jobs ahead easily.
+* **But you can load balance across multiple processes in node!** This is only gets you granularity at the per-connection level. One bad client can ruin all the connections to that particular server instance, it can't leverage additional cores or schedule other jobs ahead easily.
 * **But you can use message passing to coordinate between processes, who needs shared memory!** This is true, and for most languages this is generally a good idea. However, since it isn't built into the language the syntax is messy and the performance could be better.
-* **But you can use fibers/coroutines to get the same look!** You're still effectively managing threads manually, playing human process scheduler. Additionally you still need to know which calls are blocking and which ones aren't otherwise you'll have race conditions when what *looked* like blocking code wasn't. In both threaded and callback styles this problem is easier to see.
-* **But if all the libraries aren't async its easy to block the async parts of a hybrid system!** While this is a valid concern, most libraries are pretty clearly blocking or non-blocking. I haven't seen this become an actual issue.
+* **But you can use fibers/coroutines to get blocking-looking async code!** You're still effectively managing threads manually, playing human process scheduler. Additionally you still need to know which calls are blocking and which ones aren't otherwise you'll have race conditions when what *looked* like blocking code wasn't. In both threaded and callback styles code with thees issues sticks out.
+* **But if all the libraries aren't async its easy to block the async parts of a hybrid system!** While this is a valid concern, most libraries are pretty clearly blocking or non-blocking. I haven't seen this become an actual issue. To use blocking libraries, simple defer their processing to a background thread.
 
 ## Why Vert.x has the right mix
 
-All this is well and good, but Netty's been around for years, and all Vert.x is, is a remix of Netty and Hazelcast! Well, you *might* say that, but the reality of all software is that it's about having the right mix that takes a framework from being kinda-sorta-useful to being a no brainer.
+All this is well and good, but Netty's (the reactor library used by Vert.x) has been around for years, and all Vert.x is, is a remix of Netty and Hazelcast! Well, you *might* say that, but the reality of all software is that it's about having the right mix that takes a framework from being kinda-sorta-useful to being a no brainer.
 
-While the JVM and Java have had what is one of the [highest performance reactor implementations around](http://vertxproject.wordpress.com/2012/05/09/vert-x-vs-node-js-simple-http-benchmarks/) in Netty, one which predates Node.js by years, they've been lacking a good language to go with it. Few actually like Java the language.
+While the JVM and Java have had what is one of the [highest performance reactor implementations around](http://vertxproject.wordpress.com/2012/05/09/vert-x-vs-node-js-simple-http-benchmarks/) in Netty, one which predates Node.js by years, they've been lacking a good language to go with it. Few actually like Java the language and Netty, while well architected and quite fast takes a staggering amount of boilerplate code to write simple servers in, and has a fairly steep learning curve.
 
-Vert.x leverages the high performance implementations of Groovy, Ruby, and Javascript directly, to let developers write high-performance code directly on the JVM. Vert.x can run in *any* of those languages directly. Since its just an API, any JVM language will work. The entire universe of JVM libraries, concurrency APIs, and tooling is available to developers. Additionally, they've set developer usability as a high goal, building out good docs and a nice website for the project.
+Vert.x leverages the high performance JVM implementations of Groovy, Ruby, and Javascript in one package, letting developers write high-performance code on the JVM without knowing much about the JVM or its ecosystem at all. Vert.x can run in *any* of those languages directly. Since its just an API, any JVM language will work. The entire universe of JVM libraries, concurrency APIs, and tooling is available to developers. Additionally, they've set developer usability as a high goal, building out good docs and a nice website for the project.
 
 Tooling, by the way is a killer platform feature. Very few platforms have anything close to the [awesome](http://en.wikipedia.org/wiki/Java_Management_Extensions) [tooling](http://www.yourkit.com/) available for the JVM.
 
@@ -139,9 +150,13 @@ Both Ruby and Python have good reactor implementations, in EventMachine and Twis
 
 In reality, both of these languages have the issue of having rather small async ecosystems. Additionally, since their most popular VMs don't handle threading well, the thread-safety of popular libraries is not tested much at all.
 
-## Where it Doesn't Matter. The Standard JS Server
+Running on top of Vert.X however, one can simple call Java libraries, which are threadsafe, from Ruby. You get the syntax of Ruby with the power of Java.
 
-Now, a large part of Node.js's success is in simply being JS that runs server-side. If having a unified language is your main concern, Node.js is definitely the way to go. However, I would caution that JS is just not as nice a language as Ruby, Scala, Clojure, Java, etc. IMHO. For large codebases it gets tiresome and unweildy.
+## Where it Doesn't Matter: Those Using Node.js for the JS
+
+Now, a large part of Node.js's success is in simply being JS that runs server-side. If having a unified language across server and browser is your main concern, Node.js is definitely the way to go. However, I would caution that JS is just not as nice a language as Ruby, Scala, Clojure, Java, etc. IMHO. For large codebases it gets tiresome and unwieldy.
+
+Additionally, the stated benefits of one language across cliend and server are invisible to me. For security and practical reasons its hard to share a meaningful amount of code across both.
 
 ## For the Curious, Some Context
 

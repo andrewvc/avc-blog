@@ -2,6 +2,7 @@
 title: 'Vert.x: Why the JVM may put Node.js on the Ropes'
 layout: post
 tags : [nodejs, jvm, systems, clojure, vertx]
+permalink: vertx-node-on-ropes
 ---
 
 ## Why We're Due For a Change

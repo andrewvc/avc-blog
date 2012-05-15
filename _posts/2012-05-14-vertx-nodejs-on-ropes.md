@@ -129,7 +129,7 @@ While node.js does have solutions to most of these problems, they are generally 
 * **But you can use fibers/coroutines to get blocking-looking async code!** You're still effectively managing threads manually, playing human process scheduler. Additionally you still need to know which calls are blocking and which ones aren't otherwise you'll have race conditions when what *looked* like blocking code wasn't. In both threaded and callback styles code with thees issues sticks out.
 * **But if all the libraries aren't async its easy to block the async parts of a hybrid system!** While this is a valid concern, most libraries are pretty clearly blocking or non-blocking. I haven't seen this become an actual issue. To use blocking libraries, simple defer their processing to a background thread.
 
-## Why Vert.x has the right mix
+## Why Vert.x Has the Right Mix
 
 All this is well and good, but Netty's (the reactor library used by Vert.x) has been around for years, and all Vert.x is, is a remix of Netty and Hazelcast! Well, you *might* say that, but the reality of all software is that it's about having the right mix that takes a framework from being kinda-sorta-useful to being a no brainer.
 
@@ -194,7 +194,7 @@ The entire notion of asynchronous programming is built upon facilities that fit 
 
 This model is great for large numbers of sockets and file descriptors, where it makes the best use of resources. However, it's very confusing and complicated when it comes to day to day business logic, where simple, blocking, threaded code is a welcome comfort.
 
-## A Note on Concurrent Programming In General
+## A Note on Concurrent Programming in General
 
 I would be remiss not to mention that concurrent programming is hard. Very hard, and nearly impossible to truly get right. It's easy to get lost in tools as a panacea, but the reality is, that modeling concurrent problems well, implementing concurrent systems correctly, requires discipline and skill that all programmers find themselves falling short on.
 

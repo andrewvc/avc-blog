@@ -177,3 +177,9 @@ Moreover, one bust provide additional infrastructure for balancing connections a
 The entire notion of asynchronous programming is built upon facilities that fit the performance profile described earlier, of sockets and GUI inputs. Both of these things really spend most of their time asleep. Your OS kernel provides a special performance optimized system call for these situations, on linux systems its called [epoll](http://linux.die.net/man/4/epoll). epoll helps asynchronous code run like a champ. Your server's linux kernel is meant to handle a ton of sleepy connections and epoll lets your single reactor thread pluck only the active ones from that list as quickly as possible.
 
 This model is great for large numbers of sockets and file descriptors, where it makes the best use of resources. However, it's very confusing and complicated when it comes to day to day business logic, where simple, blocking, threaded code is a welcome comfort.
+
+## A Note on Concurrent Programming In General
+
+I would be remiss not to mention that concurrent programming is hard. Very hard, and nearly impossible to truly get right. It's easy to get lost in tools as a panacea, but the reality is, that modeling concurrent problems well, implementing concurrent systems correctly, requires discipline and skill that all programmers find themselves falling short on.
+
+There are no silver bullets, and there is no perfection. The best we can do is keep a level head in the face of chaos, and try and work through some sensible principles.

@@ -17,6 +17,16 @@ h2 {
   font-size: 16px;
 }
 
+.about {
+  background-color: #f8f8f8;
+  padding: 10px 10px;
+  border-bottom: 1px solid #efefef;
+}
+
+#self {
+  float: left; width: 80px; padding-right:20px; display: block;
+}
+
 .navbar {
   margin-bottom: 0;
   background-color: #fff;
@@ -107,6 +117,8 @@ h1 {
 }
 
 ul.posts {
+  clear:both;
+  padding-top: 10px;
   display: table;
   list-style: none;
   margin-left: 0px;

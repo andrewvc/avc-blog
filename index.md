@@ -5,12 +5,23 @@ title: My Blog. Mostly Code.
 {% include JB/setup %}
 
 
-
 <ul class="nav">
   {% assign pages_list = site.pages %}
   {% assign group = 'navigation' %}
   {% include JB/pages_list %}
 </ul> 
+
+<div class="about">
+<img id='self' src="/assets/images/self2.jpg">
+<div class="about-text">
+<p>
+I'm Andrew Cholakian. I'm a Software Developer living in Los Angeles CA, working for <a href="http://pose.com">Pose</a>. I love hacking on open source software, most of which is up on <a href="http://www.github.com/andrewvc">my github account</a>. I also am pretty interested in photography, I've got my photos up in <a href="http://www.andrewvc.com">two</a> <a href="http://onelowrumble.tumblr.com">places</a>.
+</p>
+<p>
+If you'd like to drop me a line, email me at: <a href="mailto:andrew@andrewvc.com">andrew@andrewvc.com</a>.
+</p>
+</div>
+</div>
 
 <ul class="posts">
   {% for post in site.posts %}

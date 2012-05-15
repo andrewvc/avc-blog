@@ -131,17 +131,19 @@ While node.js does have solutions to most of these problems, they are generally 
 
 ## Why Vert.x Has the Right Mix
 
-All this is well and good, but Netty's (the reactor library used by Vert.x) has been around for years, and all Vert.x is, is a remix of Netty and Hazelcast! Well, you *might* say that, but the reality of all software is that it's about having the right mix that takes a framework from being kinda-sorta-useful to being a no brainer.
+All this is well and good, but Netty (the reactor library used by Vert.x) has been around for years, and all Vert.x is, is a remix of Netty and Hazelcast! Well, you *might* say that, but the reality of all software is that it's about having the right balance and accentuations that takes a framework from being useful to being radically more effective.
 
-While the JVM and Java have had what is one of the [highest performance reactor implementations around](http://vertxproject.wordpress.com/2012/05/09/vert-x-vs-node-js-simple-http-benchmarks/) in Netty, one which predates Node.js by years, they've been lacking a good language to go with it. Few actually like Java the language and Netty, while well architected and quite fast takes a staggering amount of boilerplate code to write simple servers in, and has a fairly steep learning curve.
+While the JVM and Java have had what is one of the [highest performance reactor implementations around](http://vertxproject.wordpress.com/2012/05/09/vert-x-vs-node-js-simple-http-benchmarks/) in Netty--which predates Node.js by years--they've been lacking a good language to go with their good reactor. Additionally, few developers actually like the Java language, and Netty, while well architected and quite fast, requires a staggering amount of boilerplate code to write even simple servers in. The learning curve is slow and painful.
 
-Vert.x leverages the high performance JVM implementations of Groovy, Ruby, and Javascript in one package, letting developers write high-performance code on the JVM without knowing much about the JVM or its ecosystem at all. Vert.x can run in *any* of those languages directly. Since its just an API, any JVM language will work. The entire universe of JVM libraries, concurrency APIs, and tooling is available to developers. Additionally, they've set developer usability as a high goal, building out good docs and a nice website for the project.
+The secret sauce is in Vert.x's leveraging of the high performance implementations of Ruby, Javascript, and Groovy, integrating them into a single Vert.x executable. They've figured out a way to let developers write high-performance code on the JVM without knowing much about the JVM or its ecosystem at all. Vert.x can run *any* of those languages directly. Furthermore, since Virt.x is just a library, any JVM language can leverage it. On top of that, the entire universe of JVM libraries, concurrency APIs, and tooling is available to developers.
 
-Tooling, by the way is a killer platform feature. Very few platforms have anything close to the [awesome](http://en.wikipedia.org/wiki/Java_Management_Extensions) [tooling](http://www.yourkit.com/) available for the JVM.
+I'm also glad to see that Virt.x has made [documentation](http://vertx.io/docs.html) a high priority. Many open-source projects flounder here, failing to pick up steam as users too confused to use it. By building a great site and set of docs they've set themselves up for success.
 
 Additionally, for those who are even more keen on high concurrency, Vert.x plays well with Scala and Clojure. These are both languages that were designed for multicore, something that cannot be said for JavaScript.
 
-## Why Ruby and Python are Ill Suited for Hybrid
+Oh, and one last thing about the JVM. The JVM comes with some fantastic tooling, the likes of which few other languages have. From debuggers, to profilers, to alternate VM implementations, the JVM has the tools to keep high-scale sites running.
+
+## Why Ruby and Python are Ill Suited for Hybrid Concurrency
 
 Both Ruby and Python have good reactor implementations, in EventMachine and Twisted/Tornado respectively. However, neither language works well in a Hybrid model for two reasons:
 

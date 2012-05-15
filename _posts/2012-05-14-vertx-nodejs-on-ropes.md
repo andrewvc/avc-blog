@@ -5,7 +5,7 @@ tags : [nodejs, jvm, systems, clojure, vertx]
 permalink: vertx-node-on-ropes.html
 ---
 
-## Why We're Due for a Change
+## It's Time for Change
 
 We're beginning to see a turning point in asynchronous frameworks, specifically with regard to Node.js. My contention is that <strong>a dynamic language paired with a hybrid concurrency (async+threads) model is a better node.js than node.js</strong>.
 

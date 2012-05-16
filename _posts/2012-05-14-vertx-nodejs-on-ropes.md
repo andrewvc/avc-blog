@@ -160,6 +160,10 @@ Now, a large part of Node.js's success is in simply being JS that runs server-si
 
 Additionally, the stated benefits of one language across cliend and server are invisible to me. For security and practical reasons its hard to share a meaningful amount of code across both.
 
+## Polyglot Friction
+
+There are some concerns with the polyglot approach Vert.x is taking however. Foremost among them is that ripping languages like ruby and javascript from their normal environments can be confusing to developers. This means that developers need to learn alternate ways of setting up their systems and installing packages. It also means learning enough Java to leverage JVM libraries where native jruby/commonjs wrappers may not exist. It is for this reason that JVM native languages like Clojure, Groovy and Scala have perhaps the brightest long term future on this platform.
+
 ## For the Curious, Some Context
 
 If you've gotten this far, you might be curious as to why Node.js wound up using the Reactor pattern in the first place. To provide that answer let's look a bit at the past and what reactors were born into this world to do. The two most common places you'll find a reactor are:

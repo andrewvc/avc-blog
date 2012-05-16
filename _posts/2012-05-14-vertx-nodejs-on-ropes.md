@@ -84,8 +84,9 @@ Node.js takes the position of only using asynchronous IO. The pseudo-code below 
     # Pure Async
     messages_counter = 0
     on_receive = fn (msg, connection) {
+      msg_num = messages_counter
       messages_counter += 1
-      db.write({m: msg, cnt: message_counter}, fn (success) {
+      db.write({m: msg, cnt: msg_num}, fn (success) {
         connection.send("write result")
         db.read("something_dependent", fn (result) {
           connection.send(format_result(result))
@@ -104,7 +105,7 @@ Node.js takes the position of only using asynchronous IO. The pseudo-code below 
       msg_num = messages_counter.getAndIncr
       threadpool.execute( fn () {
         try {
-          db.write({m: msg, cnt: message_counter})
+          db.write({m: msg, cnt: msg_num})
           res = db.read("something_dependent")
           connection.send(format_result(result))
         } catch (DBError error) {

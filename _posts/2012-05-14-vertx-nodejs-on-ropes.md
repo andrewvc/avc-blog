@@ -131,17 +131,15 @@ While node.js does have solutions to most of these problems, they are generally 
 
 ## Why Vert.x Has the Right Mix
 
-All this is well and good, but Netty (the reactor library used by Vert.x) has been around for years, and all Vert.x is, is a remix of Netty and Hazelcast! Well, you *might* say that, but the reality of all software is that it's about having the right balance and accentuations that takes a framework from being useful to being radically more effective.
+One might say that if all Vert.x consists of is Netty+Hazelcast, that it's nothing revolutionary. The reality is that Vert.x gets the API right, which most of the existing JVM tools get very.... very... wrong. Even simple services in Netty takes large amounts of code, an inordinate of factories, providers, and threadpools must be created just to do simple things. Mixing all this up with languages like jruby is just prohibitively painful. APIs can be as hard to design as implementations are to write!
 
-While the JVM and Java have had what is one of the [highest performance reactor implementations around](http://vertxproject.wordpress.com/2012/05/09/vert-x-vs-node-js-simple-http-benchmarks/) in Netty--which predates Node.js by years--they've been lacking a good language to go with their good reactor. Additionally, few developers actually like the Java language, and Netty, while well architected and quite fast, requires a staggering amount of boilerplate code to write even simple servers in. The learning curve is slow and painful.
-
-The secret sauce is in Vert.x's leveraging of the high performance implementations of Ruby, Javascript, and Groovy, integrating them into a single Vert.x executable. They've figured out a way to let developers write high-performance code on the JVM without knowing much about the JVM or its ecosystem at all. Vert.x can run *any* of those languages directly. Furthermore, since Vert.x is just a library, any JVM language can leverage it. On top of that, the entire universe of JVM libraries, concurrency APIs, and tooling is available to developers.
+On top of the API, the other half of the secret sauce is in Vert.x's leveraging of high performance implementations of Ruby, Javascript, and Groovy. By integrating them into a single Vert.x executable, they've given developers the ability to write high-performance code on the JVM without knowing much about the JVM or its ecosystem at all. Vert.x can run *any* of those languages directly. Furthermore, since Vert.x is just a library, any JVM language can leverage it. On top of that, the entire universe of JVM libraries, concurrency APIs, and tooling is available to developers.
 
 I'm also glad to see that Vert.x has made [documentation](http://vertx.io/docs.html) a high priority. Many open-source projects flounder here, failing to pick up steam as users too confused to use it. By building a great site and set of docs they've set themselves up for success.
 
-Additionally, for those who are even more keen on high concurrency, Vert.x plays well with Scala and Clojure. These are both languages that were designed for multicore, something that cannot be said for JavaScript.
+For those who are even more keen on high concurrency, Vert.x plays well with Scala and Clojure. These are both languages that were designed for multicore, something that cannot be said for JavaScript.
 
-Oh, and one last thing about the JVM. The JVM comes with some fantastic tooling, the likes of which few other languages have. From debuggers, to profilers, to alternate VM implementations, the JVM has the tools to keep high-scale sites running.
+Lastly, Vert.x has deep reliance on event driven programming. By leveraging Hazelcast, a high performance, network and in-memory event bus, encapsulation and single responsibility can be archieved simply and cleanly. This works particularly well when integrating async socket logic with synchronous background threads.
 
 ## Why Ruby and Python are Ill Suited for Hybrid Concurrency
 
@@ -150,9 +148,9 @@ Both Ruby and Python have good reactor implementations, in EventMachine and Twis
 * A GIL preventing true multicore execution (multiple threads for IO Wait, not for executable code).
 * Poor async/concurrent library ecosystems
 
-In reality, both of these languages have the issue of having rather small async ecosystems. Additionally, since their most popular VMs don't handle threading well, the thread-safety of popular libraries is not tested much at all.
+Both of these languages have the issue of having rather small async ecosystems. Additionally, since their most popular VMs don't handle threading well, the thread-safety of popular libraries is not tested much at all.
 
-Running on top of Vert.X however, one can simple call Java libraries, which are threadsafe, from Ruby. You get the syntax of Ruby with the power of Java.
+Running on top of Vert.x however, one can simple call Java libraries, which are generally threadsafe, from Ruby. You get the syntax of Ruby with the power of Java.
 
 ## Where it Doesn't Matter: Those Using Node.js for the JS
 
@@ -162,39 +160,37 @@ Additionally, the stated benefits of one language across cliend and server are i
 
 ## Polyglot Friction
 
-There are some concerns with the polyglot approach Vert.x is taking however. Foremost among them is that ripping languages like ruby and javascript from their normal environments can be confusing to developers. This means that developers need to learn alternate ways of setting up their systems and installing packages. It also means learning enough Java to leverage JVM libraries where native jruby/commonjs wrappers may not exist. It is for this reason that JVM native languages like Clojure, Groovy and Scala have perhaps the brightest long term future on this platform.
+There are some concerns with the polyglot approach Vert.x is taking. Foremost among them is that ripping languages like ruby and javascript from their normal environments can be confusing to developers. This means that developers need to learn alternate ways of setting up their systems and installing packages. It also means learning enough Java to leverage JVM libraries where native jruby/commonjs wrappers may not exist. It is for this reason that JVM native languages like Clojure, Groovy and Scala have perhaps the brightest long term future on this platform.
 
 ## For the Curious, Some Context
 
-If you've gotten this far, you might be curious as to why Node.js wound up using the Reactor pattern in the first place. To provide that answer let's look a bit at the past and what reactors were born into this world to do. The two most common places you'll find a reactor are:
+If you've gotten this far, you might be curious as to why reactors came to be, and why node.js wound up using the reactor pattern in the first place. To provide that answer let's look a bit at the past and what reactors were born into this world to do. The two most common places you'll find a reactor are:
 
 * Handling GUI Events
 * Handling Network connections
 
-While these two things might *seem* extremely different, they actually share a common pattern, **both GUIs and sockets have a large number of mostly idle event sources**. It's no accident that Javascript, a programming language designed to script GUIs is also a damn good language for handling large numbers of sockets. **Evented programming is a solution to aggregate a large number of events from different sources onto a single thread.**
+While these two things might *seem* extremely different, they actually share a common thread (pun intended), **both GUIs and sockets have a large number of mostly idle event sources**. It's no accident that Javascript, a programming language designed to script GUIs is also a damn good language for handling large numbers of sockets. **Evented programming is a solution to aggregate a large number of events from different sources onto a single thread.**
 
-This gets you two distinct advantages over thread-per-connection:
+Reactors give you two distinct advantages over thread-per-connection:
 
 * Less Required Memory: You don't need a full thread/stack for each event source
 * No Need For Threadsafe Libraries: Single-threaded execution obviates concurrent libs
 
-For these cases asynchronous programming rocks. For many others, it most definitely does not rock. Here are some of the costs of this model
+For these cases asynchronous programming rocks. For many others, it most definitely does not rock. Here are some of the costs of this model:
 
 * Limited to a single core per process
 * CPU intensive code must be manually scheduled
 * Callback heavy, ugly code
 
-The last point, about ugly callbacks is the *least* important point on that list, but is still important. I'm limiting the discussion there as it has a propensity to start a flamewar. Let's talk about the first two points then.
+The last point, about ugly callbacks is the *least* important point on that list. I'm limiting the discussion there as it has a propensity to start a flamewar. Let's talk about the first two points then.
 
 That a reactor can only run on a single core is an obvious limitation, that CPU intensive code must be manually scheduled on a reactor is less obvious. What this means is that if you do something that takes up a lot of CPU time, like rendering a complex PDF for instance, you will block the entire reactor for that period of time. No other requests can be serviced while that occurs.
 
-This leaves the asynchronous programmer with only one option to keep that work in process, and that option is to break up the work into chunks. These chunks must be small enough to make the server appear to be serving multiple requests simultaneously, and must also only enqueue a small number of new chunks of a similar size so as not to flood the queue. At this point the programmer has become a human process scheduler. Not fun.
+This leaves the asynchronous programmer with only one option to keep that work in-process, and that option is to break up the work into chunks. These chunks must be small enough to make the server appear to be serving multiple requests simultaneously, and must also only enqueue a small number of new chunks of a similar size so as not to flood the queue. At this point the programmer has become a human process scheduler. Not fun.
 
-Now, humans are terrible at scheduling processes for two reasons: 1.) We're generally not as smart as the thread scheduling algorithms in a kernel 2.) An OS can decide to schedule threads based on what's happening at runtime, that can't be easily done while writing the code itself.
+Humans are terrible at scheduling processes for two reasons: 1.) We're generally not as smart as the thread scheduling algorithms in a kernel 2.) An OS can decide to schedule threads based on what's happening at runtime, that can't be easily done while writing the code.
 
-Additionally, reactors require you to spawn multiple processes and use a load-balancer to use the other cores in your machine. The downsides of this strategy are that 1.) it is more operationally complex 2.) it is hard to divert work from a process with particularly active connections to those with less active ones for connection based protocols (e.g. web sockets).
-
-Moreover, one must provide additional infrastructure for balancing connections across multiple processes, which can be avoided for longer by using a multi-core, threaded approach.
+Additionally, reactors require you to spawn multiple processes and use a load-balancer to use the other cores in your machine. The downsides of this strategy are that: 1.) it is more operationally complex 2.) it is hard to divert work from a process with particularly active connections to those with less active ones for connection based protocols (e.g. web sockets).
 
 The entire notion of asynchronous programming is built upon facilities that fit the performance profile described earlier, of sockets and GUI inputs. Both of these things really spend most of their time asleep. Your OS kernel provides a special performance optimized system call for these situations, on linux systems its called [epoll](http://linux.die.net/man/4/epoll). epoll helps asynchronous code run like a champ. Your server's linux kernel is meant to handle a ton of sleepy connections and epoll lets your single reactor thread pluck only the active ones from that list as quickly as possible.
 
@@ -202,6 +198,4 @@ This model is great for large numbers of sockets and file descriptors, where it 
 
 ## A Note on Concurrent Programming in General
 
-I would be remiss not to mention that concurrent programming is hard, very hard. Really, it's nearly impossible to truly get right. It's easy to view tools as a panacea, which they aren't. The reality is that modeling concurrent problems well and then implementing them correctly requires discipline, patience, and skill.
-
-There are no silver bullets and there is no perfection, but there *is* progress.
+I would be remiss not to mention that concurrent programming is hard. Very hard. Really, it's nearly impossible to truly get right. It's easy to view tools as a panacea, but the reality is that modeling concurrent problems correctly and then implementing them correctly requires discipline, patience and skill. It's clearly my belief that we have something special in Vert.x, but that doesn't mean it isn't a only a matter of time before something better comes along.

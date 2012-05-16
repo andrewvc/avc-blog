@@ -126,7 +126,7 @@ While node.js does have solutions to most of these problems, they are generally 
 
 * **But you can load balance across multiple processes in node!** This is only gets you granularity at the per-connection level. One bad client can ruin all the connections to that particular server instance, it can't leverage additional cores or schedule other jobs ahead easily.
 * **But you can use message passing to coordinate between processes, who needs shared memory!** This is true, and for most languages this is generally a good idea. However, since it isn't built into the language the syntax is messy and the performance could be better.
-* **But you can use fibers/coroutines to get blocking-looking async code!** You're still effectively managing threads manually, playing human process scheduler. Additionally you still need to know which calls are blocking and which ones aren't otherwise you'll have race conditions when what *looked* like blocking code wasn't. In both threaded and callback styles code with thees issues sticks out.
+* **But you can use fibers/coroutines to get blocking-looking async code!** You're still effectively managing threads manually, playing human process scheduler. Additionally you still need to know which calls are blocking and which ones aren't otherwise you'll have race conditions when what *looked* like blocking code wasn't. In both threaded and callback styles these issues stick out.
 * **But if all the libraries aren't async its easy to block the async parts of a hybrid system!** While this is a valid concern, most libraries are pretty clearly blocking or non-blocking. I haven't seen this become an actual issue. To use blocking libraries, simple defer their processing to a background thread.
 
 ## Why Vert.x Has the Right Mix
@@ -135,9 +135,9 @@ All this is well and good, but Netty (the reactor library used by Vert.x) has be
 
 While the JVM and Java have had what is one of the [highest performance reactor implementations around](http://vertxproject.wordpress.com/2012/05/09/vert-x-vs-node-js-simple-http-benchmarks/) in Netty--which predates Node.js by years--they've been lacking a good language to go with their good reactor. Additionally, few developers actually like the Java language, and Netty, while well architected and quite fast, requires a staggering amount of boilerplate code to write even simple servers in. The learning curve is slow and painful.
 
-The secret sauce is in Vert.x's leveraging of the high performance implementations of Ruby, Javascript, and Groovy, integrating them into a single Vert.x executable. They've figured out a way to let developers write high-performance code on the JVM without knowing much about the JVM or its ecosystem at all. Vert.x can run *any* of those languages directly. Furthermore, since Virt.x is just a library, any JVM language can leverage it. On top of that, the entire universe of JVM libraries, concurrency APIs, and tooling is available to developers.
+The secret sauce is in Vert.x's leveraging of the high performance implementations of Ruby, Javascript, and Groovy, integrating them into a single Vert.x executable. They've figured out a way to let developers write high-performance code on the JVM without knowing much about the JVM or its ecosystem at all. Vert.x can run *any* of those languages directly. Furthermore, since Vert.x is just a library, any JVM language can leverage it. On top of that, the entire universe of JVM libraries, concurrency APIs, and tooling is available to developers.
 
-I'm also glad to see that Virt.x has made [documentation](http://vertx.io/docs.html) a high priority. Many open-source projects flounder here, failing to pick up steam as users too confused to use it. By building a great site and set of docs they've set themselves up for success.
+I'm also glad to see that Vert.x has made [documentation](http://vertx.io/docs.html) a high priority. Many open-source projects flounder here, failing to pick up steam as users too confused to use it. By building a great site and set of docs they've set themselves up for success.
 
 Additionally, for those who are even more keen on high concurrency, Vert.x plays well with Scala and Clojure. These are both languages that were designed for multicore, something that cannot be said for JavaScript.
 
@@ -172,7 +172,7 @@ While these two things might *seem* extremely different, they actually share a c
 This gets you two distinct advantages over thread-per-connection:
 
 * Less Required Memory: You don't need a full thread/stack for each event source
-* No Need For Threadsafe Libraries: Due to a single-threaded execution
+* No Need For Threadsafe Libraries: Single-threaded execution obviates concurrent libs
 
 For these cases asynchronous programming rocks. For many others, it most definitely does not rock. Here are some of the costs of this model
 
@@ -188,9 +188,9 @@ This leaves the asynchronous programmer with only one option to keep that work i
 
 Now, humans are terrible at scheduling processes for two reasons: 1.) We're generally not as smart as the thread scheduling algorithms in a kernel 2.) An OS can decide to schedule threads based on what's happening at runtime, that can't be easily done while writing the code itself.
 
-Additionally, reactors require you to fork more processes and use a load-balancer to use the other cores in your machine. While granularity is controllable here it is1.) More time consuming to implement 2.) is hard to divert work from a process with particularly active connections to those with less active ones for connection based protocols (e.g. web sockets).
+Additionally, reactors require you to spawn multiple processes and use a load-balancer to use the other cores in your machine. The downsides of this strategy are that 1.) it is more operationally complex 2.) it is hard to divert work from a process with particularly active connections to those with less active ones for connection based protocols (e.g. web sockets).
 
-Moreover, one bust provide additional infrastructure for balancing connections across multiple processes, which can be avoided for longer by using a multi-core, threaded approach.
+Moreover, one must provide additional infrastructure for balancing connections across multiple processes, which can be avoided for longer by using a multi-core, threaded approach.
 
 The entire notion of asynchronous programming is built upon facilities that fit the performance profile described earlier, of sockets and GUI inputs. Both of these things really spend most of their time asleep. Your OS kernel provides a special performance optimized system call for these situations, on linux systems its called [epoll](http://linux.die.net/man/4/epoll). epoll helps asynchronous code run like a champ. Your server's linux kernel is meant to handle a ton of sleepy connections and epoll lets your single reactor thread pluck only the active ones from that list as quickly as possible.
 

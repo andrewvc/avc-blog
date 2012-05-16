@@ -7,7 +7,7 @@ permalink: vertx-node-on-ropes
 
 ## It's Time for Change
 
-We're beginning to see a turning point in asynchronous frameworks, specifically with regard to Node.js. My contention is that <strong>a dynamic language paired with a hybrid concurrency (async+threads) model is a better node.js than node.js</strong>.
+We're beginning to see a turning point in asynchronous frameworks, specifically with regard to Node.js. My contention is that <strong>a dynamic language paired with a hybrid concurrency model like that used by Vert.x, is a more useful tool than a pure async reactor like node.js</strong>.
 
 Developers want a dynamic language with a clean syntax like Python or Ruby. They also want massively concurrent servers to deal with sleepy connections from websockets, comet, and the like.
 
@@ -198,4 +198,4 @@ This model is great for large numbers of sockets and file descriptors, where it 
 
 ## A Note on Concurrent Programming in General
 
-I would be remiss not to mention that concurrent programming is hard. Very hard. Really, it's nearly impossible to truly get right. It's easy to view tools as a panacea, but the reality is that modeling concurrent problems correctly and then implementing them correctly requires discipline, patience and skill. It's clearly my belief that we have something special in Vert.x, but that doesn't mean it isn't a only a matter of time before something better comes along.
+I would like to close by first saying [many of these ideas are hardly new](http://www.cs.berkeley.edu/~culler/papers/events.pdf), and secondly that concurrent programming is hard. Very hard. Really, it's nearly impossible to truly get right. It's easy to view tools as a panacea, but the reality is that modeling concurrent problems correctly and then implementing them correctly requires discipline, patience and skill. It's clearly my belief that we have something special in Vert.x, but that doesn't mean it isn't a only a matter of time before something better comes along.

@@ -47,7 +47,7 @@ Vert.x is an asynchronous application server, essentially Node.js+ for the JVM. 
      <td>Slow</td>
    </tr>       
    <tr>
-     <td class='desc'>Threading Support</td>
+     <td class='desc'>Synchronous Threading Support</td>
      <td class='highlight'>Great</td>
      <td>None</td>
      <td class='highlight'>Great</td>
@@ -68,7 +68,7 @@ Vert.x is an asynchronous application server, essentially Node.js+ for the JVM. 
      <td class='desc'>Backed By</td>
      <td class='highlight'>VMware</td>
      <td class='highlight'>Joyent</td>
-     <td>N/A</td>
+     <td class='highlight'>Redhat</td>
      <td>N/A</td>
      <td>N/A</td>
      <td>N/A    </td>

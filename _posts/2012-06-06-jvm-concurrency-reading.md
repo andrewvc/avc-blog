@@ -1,3 +1,10 @@
+---
+permalink: some-jvm-concurrency-reading
+title: Misc. JVM Concurrency Reading
+layout: post
+tags : java jvm concurrency
+---
+
 Some interesting stuff has all seemed to jump across my screen over the past few weeks regarding JVM concurrency. Here's a brief run-down:
 
 * [The LMAX Architecture](http://martinfowler.com/articles/lmax.html): A speed system for processing transactions

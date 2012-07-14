@@ -20,6 +20,9 @@ I'm Andrew Cholakian. I'm a Software Developer living in Los Angeles CA, working
 <p>
 If you'd like to drop me a line, email me at: <a href="mailto:andrew@andrewvc.com">andrew@andrewvc.com</a>.
 </p>
+<p>
+If you use an RSS reader, you can [![feed](/assets/images/feed-icon.png)subscribe to my feed](/atom.xml)
+</p>
 </div>
 </div>
 

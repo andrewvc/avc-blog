@@ -2,7 +2,7 @@
 permalink: engulf3-http-api
 title: Engulf 3 HTTP API Now Working!
 layout: post
-tags : [clojure jvm]
+tags : [clojure, jvm]
 ---
 
 I've been working on the new version of my scalable HTTP load-tester engulf quite a bit lately, and it's getting very close to the 3.0.0 release! While the Web interface is still non-functional, the rest is in good shape, and fully functional. 

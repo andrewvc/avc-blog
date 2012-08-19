@@ -1,5 +1,5 @@
 ---
-permalink: /markov-http-benchmarking
+permalink: /engulf-building-for-speed-pt1
 title: Engulf - Building for Speed. Part 1
 layout: post
 tags : [systems, clojure]

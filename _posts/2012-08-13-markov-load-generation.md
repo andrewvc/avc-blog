@@ -5,8 +5,6 @@ layout: post
 tags : [ops, systems, clojure]
 ---
 
-# Using Markov chains for HTTP benchmarking
-
 In the latest version of [engulf](http://engulf-project.org), my distributed HTTP benchmarker, I decided to support request pattern generation via Markov chains. The idea for this came from my brilliant friend [Trent Strong](http://trentstrong.com/).
 
 When it comes to load testing your app there are a number of options available. Most load testers ship with a variety of options such as testing a single URL, testing a list of URLs, and replaying browsing sessions. Some are even fully scriptable, but we'll leave these aside for now. Markov chains possess some qualities that these do not, such as:
@@ -32,6 +30,8 @@ The Markov chain generator might generate the following sentences:
 Internally, the markov chain is represented thusly:
 
 ![chain-graph](/assets/images/chain.png)
+
+Each node in the graph (the circles) represents a word. Each edge (the arrows) represents the probability of a transition from one node to another.
 
 Notice that each individual pair of words in the new text can be found in the source text but wholly new sentences have been created. The most important thing to notice is that each individual adjacent pair of words in the new text is present in the source text. You may also observe that in both texts all sentences start with the letter 'I', or more accurately, all periods are followed by an 'I'. You can also see that some sentences such as "I like butter." are repeated verbatim, however some wholly original sentences like "I like ham" are present as well. This goes to what was mentioned earlier about Markov chains being based on the probability of one word following another.
 

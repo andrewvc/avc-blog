@@ -5,7 +5,7 @@ layout: post
 tags : [systems, clojure]
 ---
 
-On and off For the past year I've been working on a pet open source project, [Engulf](http://engulf-project.org), a high-performance distributed HTTP load tester. I'm excited to say that its 3.0 release is nearly ready. A lot has gone into this release, and I'd like to share some of the architectural decisions that went into Engulf.
+On-and-off, for the past year, I've been working on a pet open source project, [Engulf](http://engulf-project.org), a high-performance distributed HTTP load tester. I'm excited to say that its 3.0 release is nearly ready. A lot has gone into this release, and I'd like to share some of the architectural decisions that went into Engulf.
 
 For many apps performance is a nice to have, but in a load tester it is a requirement. There is no way around it. To that end, Engulf is built for speed and predictability . In this series of blog posts I'd like to explore some of the design decisions I've made.
 

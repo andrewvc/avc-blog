@@ -4,7 +4,9 @@
 
 <div>
   <div class="row">
+    {% if page.date %}
     <strong class="date"><span>{{ page.date | date_to_long_string }}</strong>
+   {% endif %}
 
   {% unless page.tags == empty %}
     <ul class="tag_box">

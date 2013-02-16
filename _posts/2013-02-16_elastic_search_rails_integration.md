@@ -1,4 +1,10 @@
-## How We Integrated ElasticSearch and Rails at Pose
+---
+permalink: elasticsearch-rails-stretcher-at-pose
+title: How We Integrated ElasticSearch and Rails at Pose
+layout: post
+category: elasticsearch rails ruby
+tags : 
+---
 
 Elasticsearch is a tricky integration point for many Rails apps. When we added search to [Pose](http://pose.com) we went through a months long process of refinement, trying out different solutions and ultimately rejecting them and building our own as shortcomings became apparent and complexity rose. In the end we wound up building our own client, [Stretcher](https://github.com/PoseBiz/stretcher), and our own set of Rails integration tools which are not yet open-sourced, but are described in this document.
 

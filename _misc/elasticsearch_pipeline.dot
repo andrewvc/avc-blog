@@ -1,0 +1,72 @@
+digraph G {
+  ranksep=.75; size = "6.5,20.5";
+  node [shape=box fontsize=20]
+  
+  {
+    node [fillcolor="#E7B27F" style=filled]
+    
+    ItemModel
+    UserModel
+    CategoryModel
+    BrandModel
+    StyleModel
+  }
+
+  {
+    node [fillcolor="#B9D0E3" style=filled]
+    
+    ItemIndexAlpha
+    ItemIndexBeta
+    UserIndexAlpha
+    MultiIndexAlpha
+    MultiIndexBeta
+  }
+
+  {
+    node [fillcolor="#B5E098" style=filled]
+    
+    ItemEngineAlpha
+    UserEngineAlpha
+    UserEngineBeta
+    MultiEngineAlpha
+    MultiEngineBeta
+  }
+
+  {
+    node [fillcolor="#99DDC4" style=filled]
+
+    ComboAlpha
+    ComboBeta
+  }
+
+  {rank=same; ItemModel; UserModel; CategoryModel; BrandModel; }
+  {rank=same; ItemIndexAlpha; ItemIndexBeta; MultiIndexAlpha; }
+  {rank=same; ItemEngineAlpha; UserEngineAlpha; UserEngineBeta; MultiEngineAlpha; MultiEngineBeta; }
+  {rank=same; ComboAlpha; ComboBeta; }
+
+
+  ItemIndexAlpha -> ItemModel
+  ItemIndexBeta -> ItemModel
+  ItemEngineAlpha -> ItemIndexAlpha
+  ItemEngineAlpha -> ItemIndexBeta
+
+  UserIndexAlpha -> UserModel
+  UserEngineAlpha -> UserIndexAlpha
+  UserEngineBeta-> UserIndexAlpha
+  
+  MultiIndexAlpha -> CategoryModel
+  MultiIndexAlpha -> BrandModel
+  MultiIndexAlpha -> StyleModel
+  MultiIndexBeta -> CategoryModel
+  MultiIndexBeta -> BrandModel
+  MultiIndexBeta -> StyleModel
+  MultiEngineAlpha -> MultiIndexAlpha
+  MultiEngineAlpha -> MultiIndexBeta
+  MultiEngineBeta -> MultiIndexAlpha
+  MultiEngineBeta -> MultiIndexBeta
+
+  ComboAlpha -> UserEngineAlpha
+  ComboAlpha -> ItemEngineAlpha
+  ComboBeta -> UserEngineBeta
+  ComboBeta -> ItemEngineAlpha
+}

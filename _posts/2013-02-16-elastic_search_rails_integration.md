@@ -83,10 +83,6 @@ The query to read off the queue simply grabs items in an un-ordered fashion usin
 
 Indexing a whole table that has never before been indexed is a bit different. Since most of our datasets are not sparse, we used fast chunking queries. Paging with libraries like kaminari or will_paginate gets slow with high page numbers (around page 100,000 for instance) as the server has to get a total order for the table. Instead of using paging libraries the sharded workers find the max id at the start of indexing, and go through it in integer ranges, with queries like 'id >= 100 AND id <= 199'. These workers are sharded, using a modulo for page ranges.
 
-## Only the Start
-
-We haven't been using ElasticSearch for very long, perhaps only 6 months. Hopefully this information will be useful for others in the Rails world! I'll be following up with new information as we go further with ElasticSearch!
-
 ## Why We Wrote Our Own ElasticSearch Client
 
 There were a number of available ElasticSearch clients when we started our project. We tried some of the more popular options, but after a couple months it was apparent they were not up to the task for the following reasons:
@@ -96,3 +92,7 @@ There were a number of available ElasticSearch clients when we started our proje
 * **Poor support for multiple indexes per Rails model:** This was important for us, our Index classes hook into models, not the other way around.
 * **Incomplete APIs:** Stretcher does *not* attempt to describe the ElasticSearch API with complex objects, but is mostly a DSL for building URLs and request bodies, then returning JSON as hashes. This let us implement our client quickly.
 * **Inefficient connection handling:** Stretcher uses Net::HTTP::Persistent to efficiently re-use a single keep-alive connection in a thread-safe manner.
+
+## Only the Start
+
+We haven't been using ElasticSearch for very long, perhaps only 6 months. Hopefully this information will be useful for others in the Rails world! I'll be following up with new information as we go further with ElasticSearch!

@@ -19,7 +19,7 @@ For initial imports of tables this would obviously not work as we'd need to crea
 
 Both the index_requests queue worker and the bulk worker are implemented as DelayedJob jobs capable of running in a parallel, sharded fashion.
 
-## A Sample Search
+### A Sample Search
 
 We support two main types of search API, searching a single index, and searching across multiple indexes. These map to the standard ElasticSearch "_search" endpoint, and the MultiSearch "_msearch", endpoints respectively. Both types are illustrated in the diagram below. Note that searches are a coupling of an `Engine` with an `Index`. In our class structure an `Engine` is a class used for building a query, while an `Index` represents a specific ElasticSearch Index.
 

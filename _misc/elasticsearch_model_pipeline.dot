@@ -7,8 +7,13 @@ digraph G {
     node [fillcolor="#ACE199" style=filled]
     
     Model
-    "Cron Job"
   }  
+
+  {
+    node [fillcolor="#D8D27B" style=filled]
+
+    "Cron Job"
+  }
 
   {
     node [fillcolor="#8CDCD4" style=filled]

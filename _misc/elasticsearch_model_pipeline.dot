@@ -1,0 +1,25 @@
+digraph G {
+  node [shape=box fontsize=20]
+  ranksep=.75; size = "4.5,10.5";
+  {
+    node [fillcolor="#ACE199" style=filled]
+    
+    Model
+    "Cron Job"
+  }  
+
+  {
+    node [fillcolor="#8CDCD4" style=filled]
+    "Index Request Queue"
+  }
+
+
+  {
+    node [fillcolor="#C2CCE3" style=filled]
+    "Sharded Queue Workers"
+  }
+
+  Model -> "Index Request Queue" [label="On Change:\n Add Ref. to Model to Queue"]
+  "Cron Job" -> "Sharded Queue Workers" [label="Every 10m:\n Kickoff N workers to process Queue"]
+  "Sharded Queue Workers" -> "Index Request Queue" [label="Process queue rows where id % m != n"]
+}

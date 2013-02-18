@@ -11,9 +11,7 @@ Elasticsearch is a tricky integration point for many Rails apps. When we added s
 
 Our first major concern was implementing a pipeline for converting our model objects to elastic search documents. We wound up implementing an indexing strategy that boils down to:
 
-1. Model is saved / created / deleted
-1. An entry is added to our index_requests queue
-1. A cron job goes through the queue and re-indexes the items in it.
+![ElasticSearch Model Pipeline](../assets/images/elasticsearch_model_pipeline.png)
 
 For initial imports of tables this would obviously not work as we'd need to create a queue entry of multi-million row tables. For that we have a bulk_worker job that will index every record in a table, going through the table in chunks.
 

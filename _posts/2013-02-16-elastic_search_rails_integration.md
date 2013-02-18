@@ -28,9 +28,9 @@ We support two main types of search API, searching a single index, and searching
 For those coming from a SQL background, the notion of mapping a query to different indexes may seem strange. However, in ElasticSearch it may be the case that maintaining two different indexes of the same data makes sense. We've found supporting multiple indexes invaluable in terms of A/B testing different rules regarding what gets indexed, what gets boosted, and how it gets analyzed. Additionally, from an operational perspective we can bring a new index online in the background, then seamlessly switch over.
 
 
-### Why We Don't Index in Realtime
+### Why We Don't Index in Real-time
 
-Luckily realtime indexing was not a business requirement for us. While trial to implement realtime indexing brings a lot of fragility and potential for failure. The *easiest* way to use ElasticSearch is to simply add an indexing PUT request to ElasticSearch straight into model hooks, we eschewed that for several reasons:
+Luckily real-time indexing was not a business requirement for us. While trial to implement real-time indexing brings a lot of fragility and potential for failure. The *easiest* way to use ElasticSearch is to simply add an indexing PUT request to ElasticSearch straight into model hooks, we eschewed that for several reasons:
 
 * Indexing bound to the HTTP request response cycle impacts response times to users.
 * Indexing can be slow and expensive. Some of our objects require serializing multiple associated models each time indexed.
@@ -38,31 +38,33 @@ Luckily realtime indexing was not a business requirement for us. While trial to 
 * Breaking indexing out to a background task gives us better a better failure mode given a downed search server.
 * Bursts of traffic are smoothed through the queue.
 * Periodic indexing lets us use ElasticSearch's more efficient [bulk indexing api](http://www.elasticsearch.org/guide/reference/api/bulk.html).
-* Results are cached by our Rails app in memcached anyway to keep load on ElasticSearch low, negating the value of realtime.
+* Results are cached by our Rails app in memcached anyway to keep load on ElasticSearch low, negating the value of real-time.
 
-## Efficency Concerns
+## Efficiency Concerns
 
-One thing we discovered quickly is that indexing data should be fast, and must be parallel at any reasonable sort of scale. That requirement permeated very decision we made on the indexing side of our implementation.
+One thing we discovered quickly is that indexing data should be fast, and must be parallel at any reasonable sort of scale. That requirement permeated every decision we made on the indexing side of our implementation.
 
 ### Why we kept all the work in Postgres
 
-While an RDBS is not a queue, it has sufficient queue-like attributes for the purposes we needed here. By being careful to use queries that scaled well--in our case a combination of modulo and range queries (described later in this section)--with even large queue sizes we were able to meet our performance requirements without relying on a dedicated queue servers.
+While an RDBS is not a queue, it has sufficient queue-like attributes for our needs. By being careful to use queries that scaled well--in our case a combination of modulo and range queries (described later in this section)--with even large queue sizes we are able to meet our performance requirements while keeping our infrastructure simple.
 
-Additionally, the choice of PostgreSQL meant that queue actions would be hooked into transactions around our models.
+Additionally, the choice of PostgreSQL meant that queue actions would be hooked into transactions around our models. This ensures that failures in the object creation life-cycle do not result in queue entries.
 
 ### Efficiently Queueing Index Requests
 
-Special care was taken to write SQL queries that would allow for efficient indexing of ElasticSearch data. Firstly, the queue for index requests is implemented as a table 'index_requests' in our Postgres database. Using a database table for this queue is fast enough and has the added bonus of being transactional. 
+Special care was taken to write SQL queries that would allow for efficient indexing of ElasticSearch data. Firstly, the queue for index requests is implemented as a table 'index_requests' in our PostgreSQL database. Using a database table for this queue is fast enough and has the added bonus of being transactional. 
 
 Inserts to this table first check for a previous IndexRequest row for the specific object being indexed. This query would optimally be an 'upsert', but since such operations in Rails are a bit tricky without writing complex bare SQL we opted to simply perform a 'SELECT' for duplicate records before writing to the queue. While this is a race, the worst case outcome of this is indexing items with a high change rate once or twice more, a tolerable tradeoff.
 
 ### Efficiently Reading Off The Queue
 
-The query to read off the queue simply grabs items in an un-ordered fashion using a modulus operation for sharding between workers. In Postgres querying using a 'WHERE id % x == y' is an efficient query in most cases so long as an ORDER BY clause is ommited. While this means we do not read off the queue in order that's not a pressing concern for us.
+The query to read off the queue simply grabs items in an un-ordered fashion using a modulus operation for sharding between workers. In PostgreSQL querying using a 'WHERE id % x == y' is an efficient query in most cases so long as an ORDER BY clause is omited. While this means we do not read off the queue in order our business requirements do not require speedy propagation of changes to the index.
 
 ### Efficiently Indexing a Large Un-indexed Model
 
-Indexing a whole table that has never before been indexed is a bit different. Since most of our datasets are not sparse, we used fast chunking queries. Paging with libraries like kaminari or will_paginate gets slow with high page numbers (around page 100,000 for instance) as the server has to get a total order for the table. Instead of using paging libraries the sharded workers find the max id at the start of indexing, and go through it in integer ranges, with queries like 'id >= 100 AND id <= 199'. These workers are sharded, using a modulo for page ranges.
+Indexing a whole table that has never before been indexed was implemented apart from the queue. We opted to traverse the table in integer ranges over our primary key for fast and even performance iterating over the table. Paging with libraries like kaminari or will_paginate gets slow with high page numbers (around page 100,000 for instance) as the DB has to get a total order for the table. 
+
+Instead of using paging libraries the sharded workers find the max id at the start of indexing, and go through it in integer ranges, with queries like 'id >= 100 AND id <= 199'. These workers are sharded, using a modulo for page ranges. Newer records than the MAX id found at the start of the bulk job will be picked up by the index request queue.
 
 ## Our Class Structure in Depth
 
@@ -78,7 +80,7 @@ A diagram of this structure showing some of the possible combinations of these c
 
 ![ElasticSearch Class Structure](../assets/images/elasticsearch-classes.png)
 
-One of the attributes of this architecture that may seem strange and un-ruby/rails like is using a full class for a query. ActiveRecord, for instace, uses class and instance methods on a model for queries/scopes. Our rationale here was that elasticsearch queries can be *very* complex, and have a large amount of supporting code to generate these queries. Encapsulating them as methods would have lead to bloated, confusing classes.
+One of the attributes of this architecture that may seem strange and un-ruby/rails like is using a full class for a query. ActiveRecord, for instance, uses class and instance methods on a model for queries/scopes. Our rationale behind our `Engine` query class was that ElasticSearch queries can be *very* complex, and have a large amount of supporting code involved in their generation. Encapsulating this logic as methods alone would have lead to bloated and confusing classes.
 
 It should be noted the index classes implement a 'client' method that is an instance of Stretcher::Index, through which all actual elastic search operations are performed.
 
@@ -90,7 +92,7 @@ One of our main criteria in building out our architecture was supporting multipl
 * Multiple indexes ease operational concerns, letting you deploy a new index in parallel to an existing one, letting us populate it before switching to it.
 * When it comes to experimental features we've found supporting multiple indexes per model to be quite useful. We can run a sandboxed experiment and watch it react to live data in isolation.
 
-We also wanted to make sure that we could cleanly map an index to multiple models. ElasticSearch supports multiple document types co-existing within a single index, something we exploit for our upcoming autocomplete feature. Each Index class in our class structure has a list of "indexable_classes" that it can index.
+We also wanted to make sure that we could cleanly map an index to multiple models. ElasticSearch supports multiple document types coexisting within a single index, something we exploit for our upcoming autocomplete feature. Each Index class in our class structure has a list of "indexable_classes" that it can index.
 
 ### The Index Registry
 
@@ -98,11 +100,11 @@ One class we've ommitted from the previous diagrams is our `IndexRegistry` class
 
 ## Why We Wrote Our Own ElasticSearch Client
 
-There were a number of available ElasticSearch clients when we started our project. We tried some of the more popular options, but after a couple months it was apparent they were not up to the task for the following reasons:
+There were a number of available ElasticSearch clients when we started our project. We tried some of the more popular options, but after a couple months it was apparent they were not up to the task. We wound up writing our own client, [Stretcher](https://github.com/PoseBiz/stretcher) for the following reasons:
 
-* **Bad APIs:** The clients we vetted mapped to ElasticSearch in inconsistent or confusing ways. ElasticSearch's API is complex and does not have very complete docs, a bad API means reconciling already unclear docs through an unnecssary abstraction layer.
-* **Inefficient Rails integration:** we wound up writing our own high performance classes for importing data (described later in this doc)
-* **Poor support for multiple indexes per Rails model:** This was important for us, our Index classes hook into models, not the other way around.
+* **Bad APIs:** The clients we vetted mapped to ElasticSearch in inconsistent or confusing ways. ElasticSearch's API is complex and does not have very complete docs. A bad API means reconciling already unclear docs through an unnecessary abstraction layer, a constant source of frustration.
+* **Inefficient Rails integration:** We wound up writing our own high performance classes for importing data as described earlier, Tire in particular recommends will_paginate, which is extremely inefficient for traversing large datasets. Fast importing is not hard, but is not trivial either.
+* **Poor support for multiple indexes per Rails model:** This was important for us, our `Index` classes hook into models, not the other way around, keeping our classes small and flexible.
 * **Incomplete APIs:** Stretcher does *not* attempt to describe the ElasticSearch API with complex objects, but is mostly a DSL for building URLs and request bodies, then returning JSON as hashes. This let us implement our client quickly.
 * **Inefficient connection handling:** Stretcher uses Net::HTTP::Persistent to efficiently re-use a single keep-alive connection in a thread-safe manner.
 

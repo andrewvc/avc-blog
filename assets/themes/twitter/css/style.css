@@ -21,6 +21,11 @@ h3 {
   font-size: 14px;
 }
 
+.content-inner p img {
+  display: block;
+  margin: 10px auto;
+}
+
 .about {
   background-color: #f8f8f8;
   padding: 10px 10px;

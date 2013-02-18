@@ -1,6 +1,8 @@
 digraph G {
-  node [shape=box fontsize=20]
-  ranksep=.75; size = "4.5,10.5";
+  node [shape=box fontsize=15];
+  ranksep=.75; size = "13,20.5";
+  rankdir=LR;
+  
   {
     node [fillcolor="#ACE199" style=filled]
     
@@ -19,7 +21,7 @@ digraph G {
     "Sharded Queue Workers"
   }
 
-  Model -> "Index Request Queue" [label="On Change:\n Add Ref. to Model to Queue"]
-  "Cron Job" -> "Sharded Queue Workers" [label="Every 10m:\n Kickoff N workers to process Queue"]
-  "Sharded Queue Workers" -> "Index Request Queue" [label="Process queue rows where id % m != n"]
+  Model -> "Index Request Queue" [label="On Change:\n Add Model to Queue"]
+  "Cron Job" -> "Sharded Queue Workers" [label="Every 10m:\n Kickoff workers"]
+  "Sharded Queue Workers" -> "Index Request Queue" [label="Process Queue"]
 }

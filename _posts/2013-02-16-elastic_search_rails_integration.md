@@ -7,7 +7,9 @@ tags: ['elasticsearch', 'rails', 'ruby']
 
 Elasticsearch is a tricky integration point for many Rails apps. When we added search to [Pose](http://pose.com) we went through a months long process of refinement, trying out different solutions and ultimately rejecting them and building our own as shortcomings became apparent and complexity rose. In the end we wound up building our own client, [Stretcher](https://github.com/PoseBiz/stretcher), and our own set of Rails integration tools which are not yet open-sourced, but are described in this document.
 
-## Our Pipeline
+## Overview
+
+### Our Pipeline
 
 Our first major concern was implementing a pipeline for converting our model objects to elastic search documents. We wound up implementing an indexing strategy that boils down to:
 
@@ -17,7 +19,16 @@ For initial imports of tables this would obviously not work as we'd need to crea
 
 Both the index_requests queue worker and the bulk worker are implemented as DelayedJob jobs capable of running in a parallel, sharded fashion.
 
-## Why We Don't Index in Realtime
+## A Sample Search
+
+We support two main types of search API, searching a single index, and searching across multiple indexes. These map to the standard ElasticSearch "_search" endpoint, and the MultiSearch "_msearch", endpoints respectively. Both types are illustrated in the diagram below. Note that searches are a coupling of an `Engine` with an `Index`. In our class structure an `Engine` is a class used for building a query, while an `Index` represents a specific ElasticSearch Index.
+
+![Query Example](../assets/images/elasticsearch_query_example.png)
+
+For those coming from a SQL background, the notion of mapping a query to different indexes may seem strange. However, in ElasticSearch it may be the case that maintaining two different indexes of the same data makes sense. We've found supporting multiple indexes invaluable in terms of A/B testing different rules regarding what gets indexed, what gets boosted, and how it gets analyzed. Additionally, from an operational perspective we can bring a new index online in the background, then seamlessly switch over.
+
+
+### Why We Don't Index in Realtime
 
 Luckily realtime indexing was not a business requirement for us. While trial to implement realtime indexing brings a lot of fragility and potential for failure. The *easiest* way to use ElasticSearch is to simply add an indexing PUT request to ElasticSearch straight into model hooks, we eschewed that for several reasons:
 
@@ -28,34 +39,6 @@ Luckily realtime indexing was not a business requirement for us. While trial to 
 * Bursts of traffic are smoothed through the queue.
 * Periodic indexing lets us use ElasticSearch's more efficient [bulk indexing api](http://www.elasticsearch.org/guide/reference/api/bulk.html).
 * Results are cached by our Rails app in memcached anyway to keep load on ElasticSearch low, negating the value of realtime.
-
-## Multiple Indexes Per Model and Multiple Models Per Index
-
-One of our main criteria in building out our architecture was supporting multiple indexes per model. This was important because:
-
-* ElasticSearch indexes are *not* 1:1 mappings of your Rails models, they may have different tokenization, boosts, and even entirely different fields.
-* Multiple indexes ease operational concerns, letting you deploy a new index in parallel to an existing one, letting us populate it before switching to it.
-* When it comes to experimental features we've found supporting multiple indexes per model to be quite useful. We can run a sandboxed experiment and watch it react to live data in isolation.
-
-We also wanted to make sure that we could cleanly map an index to multiple models. ElasticSearch supports multiple document types co-existing within a single index, something we exploit for our upcoming autocomplete feature. Each Index class in our class structure has a list of "indexable_classes" that it can index.
-
-## Our Class Structure
-
-ElasticSearch and an SQL server have very little in common, following this our supporting class structure for ElasticSearch looks very little like ActiveRecord. API access to ElasticSearch is performed through the [Stretcher](https://github.com/PoseBiz/stretcher) ElasticSearch client we wrote. The classes we went with are as follows:
-
-* **Index:** Maps to an ElasticSearch index, includes the [Stretcher](https://github.com/PoseBiz/stretcher) client and performs IO
-* **Engine:** Maps to an ElasticSearch query
-* **Combo:** Maps to an combination of queries / indexes using the [multi search api](http://www.elasticsearch.org/guide/reference/api/multi-search.html)
-
-A diagram of this structure showing some of the possible combinations of these classes is shown below:
-
-![ElasticSearch Class Structure](../assets/images/elasticsearch-classes.png)
-
-One of the attributes of this architecture that may seem strange and un-ruby/rails like is using a full class for a query. ActiveRecord, for instace, uses class and instance methods on a model for queries/scopes. Our rationale here was that elasticsearch queries can be *very* complex, and have a large amount of supporting code to generate these queries. Encapsulating them as methods would have lead to bloated, confusing classes.
-
-It should be noted the index classes implement a 'client' method that is an instance of Stretcher::Index, through which all actual elastic search operations are performed.
-
-Additionally, there is a not pictured IndexRegistry class that specifies which indexes are active, and provides methods to quickly determine which indexes apply to a particular model, and allows iteration through all active indices.
 
 ## Efficency Concerns
 
@@ -80,6 +63,38 @@ The query to read off the queue simply grabs items in an un-ordered fashion usin
 ### Efficiently Indexing a Large Un-indexed Model
 
 Indexing a whole table that has never before been indexed is a bit different. Since most of our datasets are not sparse, we used fast chunking queries. Paging with libraries like kaminari or will_paginate gets slow with high page numbers (around page 100,000 for instance) as the server has to get a total order for the table. Instead of using paging libraries the sharded workers find the max id at the start of indexing, and go through it in integer ranges, with queries like 'id >= 100 AND id <= 199'. These workers are sharded, using a modulo for page ranges.
+
+## Our Class Structure in Depth
+
+### The Foundation
+
+ElasticSearch and an SQL server have very little in common, following this our supporting class structure for ElasticSearch looks very little like ActiveRecord. API access to ElasticSearch is performed through the [Stretcher](https://github.com/PoseBiz/stretcher) ElasticSearch client we wrote. The classes we went with are as follows:
+
+* **Index:** Maps to an ElasticSearch index, includes the [Stretcher](https://github.com/PoseBiz/stretcher) client and performs IO
+* **Engine:** Maps to an ElasticSearch query
+* **Combo:** Maps to an combination of queries / indexes using the [multi search api](http://www.elasticsearch.org/guide/reference/api/multi-search.html)
+
+A diagram of this structure showing some of the possible combinations of these classes is shown below:
+
+![ElasticSearch Class Structure](../assets/images/elasticsearch-classes.png)
+
+One of the attributes of this architecture that may seem strange and un-ruby/rails like is using a full class for a query. ActiveRecord, for instace, uses class and instance methods on a model for queries/scopes. Our rationale here was that elasticsearch queries can be *very* complex, and have a large amount of supporting code to generate these queries. Encapsulating them as methods would have lead to bloated, confusing classes.
+
+It should be noted the index classes implement a 'client' method that is an instance of Stretcher::Index, through which all actual elastic search operations are performed.
+
+### Multiple Indexes Per Model and Multiple Models Per Index
+
+One of our main criteria in building out our architecture was supporting multiple indexes per model. This was important because:
+
+* ElasticSearch indexes are *not* 1:1 mappings of your Rails models, they may have different tokenization, boosts, and even entirely different fields.
+* Multiple indexes ease operational concerns, letting you deploy a new index in parallel to an existing one, letting us populate it before switching to it.
+* When it comes to experimental features we've found supporting multiple indexes per model to be quite useful. We can run a sandboxed experiment and watch it react to live data in isolation.
+
+We also wanted to make sure that we could cleanly map an index to multiple models. ElasticSearch supports multiple document types co-existing within a single index, something we exploit for our upcoming autocomplete feature. Each Index class in our class structure has a list of "indexable_classes" that it can index.
+
+### The Index Registry
+
+One class we've ommitted from the previous diagrams is our `IndexRegistry` class. Our `Index` classes must be instantiated with a `Stretcher::Search` instance to provide connectivity, and a prefix parameter for namespacing--important when sharing a single ElasticSearch server between multiple staging environments. Additionally, the `IndexRegistry` provides lookups for `Index` objects based on model classes, letting us figure out which `Index` instances need to be updated when a given `ActiveRecord` model is updated.
 
 ## Why We Wrote Our Own ElasticSearch Client
 

@@ -1,0 +1,18 @@
+digraph G {
+  node [shape=box fontsize=15];
+  ranksep=.75; size = "5,5";
+  "Combo Query: Rachel Zoe" [fillcolor="#D6CFB2" style=filled]
+  "Combo Query: Rachel Zoe" -> SearchCombo
+  SearchCombo [shape=record, label="{SearchCombo}|{{ItemEngine|ItemIndex}|{UserEngine|UserIndex}|{CollectionEngine|CollectionIndex}}" fillcolor="#D6C5E1" style=filled]
+  "ElasticSearch Multi Search" [fillcolor="#BFE093" style=filled]
+  SearchCombo -> "ElasticSearch Multi Search"
+  "Results: {items: [...], users: [...], collections: [...]}" [style=filled fillcolor="#98DCBE"]
+  "ElasticSearch Multi Search" -> "Results: {items: [...], users: [...], collections: [...]}"
+  
+  "Item Query: Jacket" [fillcolor="#D6CFB2" style=filled]
+  ItemQI [shape=record, label="{ItemEngine|ItemIndex}", style=filled, fillcolor="#D6C5E1"]
+  "ElasticSearch Search" [fillcolor="#BFE093" style=filled]
+  "Results: [...]" [style=filled fillcolor="#98DCBE"]
+  "Item Query: Jacket" -> ItemQI -> "ElasticSearch Search" -> "Results: [...]"
+  
+}

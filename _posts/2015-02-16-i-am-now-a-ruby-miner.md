@@ -27,7 +27,7 @@ Salvation was found with Ruby Mine.
 I've sat down and compiled a list of pros and cons I've experienced with Ruby Mine. On balance,
 I'm very happy with it, I hope others find this useful :).
 
-*Pros*
+**Pros**
 
 * An amazing debugger.
 * Full Emacs key binding support, easily customizable to my needs.
@@ -40,7 +40,7 @@ I'm very happy with it, I hope others find this useful :).
 * Full JRuby support.
 * Good Vagrant support.
 
-*Cons*
+**Cons**
 
 * Need to edit a random python file? Nope, Rubymine is Ruby / JS / Shell only.
 * Still a little laggy, even on my mid-2014 15" MBP w/ 16GB ram.

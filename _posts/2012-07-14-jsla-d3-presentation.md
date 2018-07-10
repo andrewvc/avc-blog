@@ -1,5 +1,5 @@
 ---
-permalink: /d3-backbone-js.la
+permalink: /d3-backbone-js-la
 title: D3 + Backbone @ js.la
 layout: post
 category: 
